@@ -1,0 +1,14 @@
+Package: midi
+Title: Microstructure Information from Diffusion Imaging
+Version: 0.0.0.9000
+Authors@R: 
+    person("Aymeric", "Stamm", , "aymeric.stamm@cnrs.fr", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-8725-3654"))
+Description: A collection of diffusion models and tools to extract 
+    microstructure information from diffusion MRI data.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Depends: 
+    R (>= 3.5)
