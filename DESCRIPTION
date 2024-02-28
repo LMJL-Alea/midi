@@ -14,3 +14,5 @@ Depends:
     R (>= 3.5)
 URL: https://github.com/astamm/midi, https://astamm.github.io/midi/
 BugReports: https://github.com/astamm/midi/issues
+Imports: 
+    R6
