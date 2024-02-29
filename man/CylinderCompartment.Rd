@@ -37,7 +37,7 @@ cylinderComp$get_signal(
 \if{html}{\out{<a id="method-CylinderCompartment-new"></a>}}
 \if{latex}{\out{\hypertarget{method-CylinderCompartment-new}{}}}
 \subsection{Method \code{new()}}{
-Instantiates a new cylinder radial compartment.
+Instantiates a new cylinder compartment.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CylinderCompartment$new(
   axis,

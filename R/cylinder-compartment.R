@@ -6,7 +6,7 @@
 CylinderCompartment <- R6::R6Class(
   "CylinderCompartment",
   public = list(
-    #' @description Instantiates a new cylinder radial compartment.
+    #' @description Instantiates a new cylinder compartment.
     #'
     #' @param axis A length-3 numeric vector specifying the axis of the
     #'  cylinder.
@@ -31,13 +31,13 @@ CylinderCompartment <- R6::R6Class(
         cli::cli_abort("The diffusivity must be a positive value.")
       }
       private$diffusivity <- diffusivity
-      switch(
+      private$radial_compartment <- switch(
         radial_model,
-        soderman = private$radial_compartment <- SodermanCompartment$new(radius, diffusivity),
-        callaghan = private$radial_compartment <- CallaghanCompartment$new(radius, diffusivity),
-        stanisz = private$radial_compartment <- StaniszCompartment$new(radius, diffusivity),
-        neuman = private$radial_compartment <- NeumanCompartment$new(radius, diffusivity),
-        vangelderen = private$radial_compartment <- VanGelderenCompartment$new(radius, diffusivity)
+        soderman = SodermanCompartment$new(radius, diffusivity),
+        callaghan = CallaghanCompartment$new(radius, diffusivity),
+        stanisz = StaniszCompartment$new(radius, diffusivity),
+        neuman = NeumanCompartment$new(radius, diffusivity),
+        vangelderen = VanGelderenCompartment$new(radius, diffusivity)
       )
     },
 
