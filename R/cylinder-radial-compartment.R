@@ -1,6 +1,7 @@
 #' Cylinder radial compartment class
 #'
-#' @description A base class to model restricted diffusion in a cylinder.
+#' @description A class to model restricted diffusion in a cylinder in the plane
+#'   perpendicular to the cylinder axis.
 #'
 #' @param radius A numeric value specifying the radius of the cylinder in
 #'   meters.
@@ -60,6 +61,8 @@ CylinderRadialCompartment <- R6::R6Class(
     #'  function. Defaults to `20L`.
     #' @param m_max An integer value specifying the maximum number of extrema
     #' for the Bessel function. Defaults to `50L`.
+    #'
+    #' @return A numeric value storing the predicted signal attenuation.
     #'
     #' @examples
     #' sodermanComp <- SodermanCompartment$new(
@@ -136,10 +139,10 @@ CylinderRadialCompartment <- R6::R6Class(
                                          echo_time,
                                          n_max,
                                          m_max) {
-      comp <- self$clone()
+      work_compartment <- self$clone()
       fun <- function(x) {
-        comp$set_radius(x)
-        comp$get_signal(
+        work_compartment$set_radius(x)
+        work_compartment$get_signal(
           small_delta = small_delta, big_delta = big_delta, G = G,
           echo_time = echo_time, n_max = n_max, m_max = m_max
         )
@@ -164,6 +167,7 @@ SodermanCompartment <- R6::R6Class(
                           n_max = 20L,
                           m_max = 50L) {
       x <- private$gamma * small_delta * G * private$radius
+      if (x < .Machine$double.eps) return(1)
       (2 * besselJ(x, 1) / x)^2
     }
   )
@@ -184,6 +188,7 @@ StaniszCompartment <- R6::R6Class(
                           n_max = 20L,
                           m_max = 50L) {
       x <- private$gamma * small_delta * G * private$radius
+      if (x < .Machine$double.eps) return(1)
       n <- seq_len(n_max)
       work_vector <- exp(-n^2 * pi^2 * private$diffusivity * big_delta / private$radius^2)
       work_vector <- work_vector * (1 - (-1)^n * cos(x))
