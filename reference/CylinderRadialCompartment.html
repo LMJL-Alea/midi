@@ -57,14 +57,13 @@ perpendicular to the cylinder axis.</p>
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
 <ul><li><p><a href="#method-CylinderRadialCompartment-new"><code>CylinderRadialCompartment$new()</code></a></p></li>
-<li><p><a href="#method-CylinderRadialCompartment-set_radius"><code>CylinderRadialCompartment$set_radius()</code></a></p></li>
 <li><p><a href="#method-CylinderRadialCompartment-get_signal"><code>CylinderRadialCompartment$get_signal()</code></a></p></li>
 <li><p><a href="#method-CylinderRadialCompartment-clone"><code>CylinderRadialCompartment$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-CylinderRadialCompartment-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Instantiates a new cylinder radial compartment.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/CylinderRadialCompartment.html">CylinderRadialCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">radius</span>, <span class="va">diffusivity</span>, radius_sd <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/CylinderRadialCompartment.html">CylinderRadialCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">radius</span>, <span class="va">diffusivity</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -79,14 +78,6 @@ meters.</p></dd>
 cylinder in m\(^2\).s\(^{-1}\).</p></dd>
 
 
-<dt><code>radius_sd</code></dt>
-<dd><p>A numeric value specifying the standard deviation of the
-radius of the cylinder in meters. Defaults to <code>NULL</code>. If specified, a Gamma
-distribution of axon radii is used with shape and scale parameters computed
-so that the mean is equal to <code>radius</code> and the variance is equal to
-<code>radius_sd^2</code>.</p></dd>
-
-
 </dl><p></p></div>
 </div>
 <div class="section">
@@ -94,40 +85,10 @@ so that the mean is equal to <code>radius</code> and the variance is equal to
 <p>An instance of the <code>CylinderRadialCompartment</code> class.</p>
 </div>
 
-</div><p></p><hr><a id="method-CylinderRadialCompartment-set_radius"></a><div class="section">
-<h3 id="method-set-radius-">Method <code>set_radius()</code><a class="anchor" aria-label="anchor" href="#method-set-radius-"></a></h3>
-<p>Sets the radius of the cylinder.</p><div class="section">
-<h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CylinderRadialCompartment</span><span class="op">$</span><span class="fu">set_radius</span><span class="op">(</span><span class="va">radius</span>, radius_sd <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>radius</code></dt>
-<dd><p>A numeric value specifying the radius of the cylinder in
-meters.</p></dd>
-
-
-<dt><code>radius_sd</code></dt>
-<dd><p>A numeric value specifying the standard deviation of the
-radius of the cylinder in meters. Defaults to <code>NULL</code>. If specified, a Gamma
-distribution of axon radii is used with shape and scale parameters computed
-so that the mean is equal to <code>radius</code> and the variance is equal to
-<code>radius_sd^2</code>.</p></dd>
-
-
-</dl><p></p></div>
-</div>
-<div class="section">
-<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
-<p>The instance of the <code>CylinderRadialCompartment</code> class,
-invisibly.</p>
-</div>
-
 </div><p></p><hr><a id="method-CylinderRadialCompartment-get_signal"></a><div class="section">
 <h3 id="method-get-signal-">Method <code>get_signal()</code><a class="anchor" aria-label="anchor" href="#method-get-signal-"></a></h3>
 <p>Computes the signal attenuation predicted by the model.</p><div class="section">
-<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CylinderRadialCompartment</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span></span>
 <span>  <span class="va">small_delta</span>,</span>
 <span>  <span class="va">big_delta</span>,</span>
@@ -139,7 +100,7 @@ invisibly.</p>
 </div>
 
 <div class="section">
-<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>small_delta</code></dt>
 <dd><p>A numeric value specifying the duration of the
 gradient pulse in seconds.</p></dd>
@@ -172,7 +133,7 @@ for the Bessel function. Defaults to <code>50L</code>.</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
+<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
 <p>A numeric value storing the predicted signal attenuation.</p>
 </div>
 <div class="section">
@@ -212,12 +173,12 @@ for the Bessel function. Defaults to <code>50L</code>.</p></dd>
 </div><p></p><hr><a id="method-CylinderRadialCompartment-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
+<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CylinderRadialCompartment</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
