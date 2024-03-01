@@ -21,7 +21,6 @@ Callaghan's model.
 <ul>
 <li><span class="pkg-link" data-pkg="midi" data-topic="CylinderRadialCompartment" data-id="get_signal"><a href='../../midi/html/CylinderRadialCompartment.html#method-CylinderRadialCompartment-get_signal'><code>midi::CylinderRadialCompartment$get_signal()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="midi" data-topic="CylinderRadialCompartment" data-id="initialize"><a href='../../midi/html/CylinderRadialCompartment.html#method-CylinderRadialCompartment-initialize'><code>midi::CylinderRadialCompartment$initialize()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="midi" data-topic="CylinderRadialCompartment" data-id="set_radius"><a href='../../midi/html/CylinderRadialCompartment.html#method-CylinderRadialCompartment-set_radius'><code>midi::CylinderRadialCompartment$set_radius()</code></a></span></li>
 </ul>
 </details>
 }}

@@ -2,50 +2,20 @@
 #'
 #' @description A class to model restricted diffusion in a cylinder in the plane
 #'   perpendicular to the cylinder axis.
-#'
-#' @param radius A numeric value specifying the radius of the cylinder in
-#'   meters.
-#' @param radius_sd A numeric value specifying the standard deviation of the
-#'   radius of the cylinder in meters. Defaults to `NULL`. If specified, a Gamma
-#'   distribution of axon radii is used with shape and scale parameters computed
-#'   so that the mean is equal to `radius` and the variance is equal to
-#'   `radius_sd^2`.
 CylinderRadialCompartment <- R6::R6Class(
   "CylinderRadialCompartment",
   public = list(
     #' @description Instantiates a new cylinder radial compartment.
     #'
+    #' @param radius A numeric value specifying the radius of the cylinder in
+    #'   meters.
     #' @param diffusivity A numeric value specifying the diffusivity within the
     #'   cylinder in m\eqn{^2}.s\eqn{^{-1}}.
     #'
     #' @return An instance of the [`CylinderRadialCompartment`] class.
-    initialize = function(radius, diffusivity, radius_sd = NULL) {
-      self$set_radius(radius, radius_sd)
-      private$diffusivity <- diffusivity
-    },
-
-    #' @description Sets the radius of the cylinder.
-    #'
-    #' @return The instance of the [`CylinderRadialCompartment`] class,
-    #'   invisibly.
-    set_radius = function(radius, radius_sd = NULL) {
+    initialize = function(radius, diffusivity) {
       private$radius <- radius
-      private$integrate_over_radius <- FALSE
-      if (!is.null(radius_sd)) {
-        private$radius_sd <- radius_sd
-        private$integrate_over_radius <- TRUE
-        radius_var <- radius_sd^2
-        shape <- radius^2 / radius_var
-        scale <- radius_var / radius
-        withr::with_seed(1234, {
-          private$radius_sample <- stats::rgamma(
-            n = 1000L,
-            shape = shape,
-            scale = scale
-          )
-        })
-      }
-      invisible(self)
+      private$diffusivity <- diffusivity
     },
 
     #' @description Computes the signal attenuation predicted by the model.
@@ -98,33 +68,19 @@ CylinderRadialCompartment <- R6::R6Class(
                           echo_time = NULL,
                           n_max = 20L,
                           m_max = 50L) {
-      if (private$integrate_over_radius) {
-        private$compute_integrated_signal(
-          small_delta = small_delta,
-          big_delta = big_delta,
-          G = G,
-          echo_time = echo_time,
-          n_max = n_max,
-          m_max = m_max
-        )
-      } else {
-        private$compute_signal(
-          small_delta = small_delta,
-          big_delta = big_delta,
-          G = G,
-          echo_time = echo_time,
-          n_max = n_max,
-          m_max = m_max
-        )
-      }
+      private$compute_signal(
+        small_delta = small_delta,
+        big_delta = big_delta,
+        G = G,
+        echo_time = echo_time,
+        n_max = n_max,
+        m_max = m_max
+      )
     }
   ),
   private = list(
     radius = NULL,
     diffusivity = NULL,
-    radius_sd = NULL,
-    radius_sample = NULL,
-    integrate_over_radius = FALSE,
     gamma = 2.675e8, # rad s^-1 T^-1,
     besselJ_derivative = function(x, n) {
       ifelse(
@@ -132,22 +88,6 @@ CylinderRadialCompartment <- R6::R6Class(
         -besselJ(x, 1),
         (besselJ(x, n - 1) - besselJ(x, n + 1)) / 2
       )
-    },
-    compute_integrated_signal = function(small_delta,
-                                         big_delta,
-                                         G,
-                                         echo_time,
-                                         n_max,
-                                         m_max) {
-      work_compartment <- self$clone()
-      fun <- function(x) {
-        work_compartment$set_radius(x)
-        work_compartment$get_signal(
-          small_delta = small_delta, big_delta = big_delta, G = G,
-          echo_time = echo_time, n_max = n_max, m_max = m_max
-        )
-      }
-      mean(sapply(private$radius_sample, fun))
     }
   )
 )

@@ -15,6 +15,7 @@ Depends:
 URL: https://github.com/astamm/midi, https://astamm.github.io/midi/
 BugReports: https://github.com/astamm/midi/issues
 Imports: 
+    purrr,
     R6
 Suggests: 
     testthat (>= 3.0.0)

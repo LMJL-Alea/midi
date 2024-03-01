@@ -47,7 +47,6 @@ vanGelderenComp$get_signal(0.03, 0.03, 0.040)
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-CylinderRadialCompartment-new}{\code{CylinderRadialCompartment$new()}}
-\item \href{#method-CylinderRadialCompartment-set_radius}{\code{CylinderRadialCompartment$set_radius()}}
 \item \href{#method-CylinderRadialCompartment-get_signal}{\code{CylinderRadialCompartment$get_signal()}}
 \item \href{#method-CylinderRadialCompartment-clone}{\code{CylinderRadialCompartment$clone()}}
 }
@@ -58,7 +57,7 @@ vanGelderenComp$get_signal(0.03, 0.03, 0.040)
 \subsection{Method \code{new()}}{
 Instantiates a new cylinder radial compartment.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CylinderRadialCompartment$new(radius, diffusivity, radius_sd = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CylinderRadialCompartment$new(radius, diffusivity)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -69,45 +68,11 @@ meters.}
 
 \item{\code{diffusivity}}{A numeric value specifying the diffusivity within the
 cylinder in m\eqn{^2}.s\eqn{^{-1}}.}
-
-\item{\code{radius_sd}}{A numeric value specifying the standard deviation of the
-radius of the cylinder in meters. Defaults to \code{NULL}. If specified, a Gamma
-distribution of axon radii is used with shape and scale parameters computed
-so that the mean is equal to \code{radius} and the variance is equal to
-\code{radius_sd^2}.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 An instance of the \code{\link{CylinderRadialCompartment}} class.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CylinderRadialCompartment-set_radius"></a>}}
-\if{latex}{\out{\hypertarget{method-CylinderRadialCompartment-set_radius}{}}}
-\subsection{Method \code{set_radius()}}{
-Sets the radius of the cylinder.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CylinderRadialCompartment$set_radius(radius, radius_sd = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{radius}}{A numeric value specifying the radius of the cylinder in
-meters.}
-
-\item{\code{radius_sd}}{A numeric value specifying the standard deviation of the
-radius of the cylinder in meters. Defaults to \code{NULL}. If specified, a Gamma
-distribution of axon radii is used with shape and scale parameters computed
-so that the mean is equal to \code{radius} and the variance is equal to
-\code{radius_sd^2}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-The instance of the \code{\link{CylinderRadialCompartment}} class,
-invisibly.
 }
 }
 \if{html}{\out{<hr>}}
