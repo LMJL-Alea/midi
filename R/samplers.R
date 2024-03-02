@@ -6,7 +6,7 @@ rotation_matrix_from_z_to_mu <- function(mu) {
     return(diag(3))
   }
   if (all(mu == -z)) {
-    return(matrix(c(-1, 0, 0, 0, -1, 0, 0, 0, 1), nrow = 3, ncol = 3))
+    return(matrix(c(1, 0, 0, 0, -1, 0, 0, 0, -1), nrow = 3L, ncol = 3L))
   }
   # computes cross product between z and mu
   v <- c(

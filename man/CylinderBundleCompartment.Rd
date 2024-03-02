@@ -16,9 +16,9 @@ cylinderBundleComp <- CylinderBundleCompartment$new(
   axis = c(0, 0, 1),
   radius = 1e-5,
   diffusivity = 2.0e-9,
-  cylinder_density = 0.5,
   axial_diffusivity = 2.0e-9,
   radial_diffusivity = 2.0e-10,
+  cylinder_density = 0.5,
   radial_model = "soderman",
   voxel_size = c(1, 1, 1) * 1e-3
 )
@@ -149,9 +149,9 @@ A numeric value storing the predicted signal attenuation.
   axis = c(0, 0, 1),
   radius = 1e-5,
   diffusivity = 2.0e-9,
-  cylinder_density = 0.5,
   axial_diffusivity = 2.0e-9,
   radial_diffusivity = 2.0e-10,
+  cylinder_density = 0.5,
   radial_model = "soderman",
   voxel_size = c(1, 1, 1) * 1e-3
 )
