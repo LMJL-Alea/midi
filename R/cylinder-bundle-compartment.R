@@ -53,28 +53,35 @@ CylinderBundleCompartment <- R6::R6Class(
       private$axial_diffusivity <- axial_diffusivity
       private$radial_diffusivity <- radial_diffusivity
 
-      voxel_volume <- prod(voxel_size)
-      L <- min(voxel_size)
-      n_cylinders <- round(voxel_volume * cylinder_density /
-        (pi * radius[1]^2 * L), digits = 0)
-      cli::cli_alert_info("Number of cylinders: {n_cylinders}")
+      if (cylinder_density > 0) {
+        voxel_volume <- prod(voxel_size)
+        L <- min(voxel_size)
+        n_cylinders <- round(voxel_volume * cylinder_density /
+                               (pi * radius[1]^2 * L), digits = 0)
+        cli::cli_alert_info("Number of cylinders: {n_cylinders}")
 
-      withr::with_seed(1234, {
-        axis_sample <- rwatson(n_cylinders, axis, axis_concentration)
-        radius_sample <- rgamma(n_cylinders, radius, radius_sd)
-      })
+        if (is.infinite(axis_concentration) && radius_sd == 0) {
+          axis_sample <- list(axis)
+          radius_sample <- list(radius)
+        } else {
+          withr::with_seed(1234, {
+            axis_sample <- rwatson(n_cylinders, axis, axis_concentration)
+            radius_sample <- rgamma(n_cylinders, radius, radius_sd)
+          })
+        }
 
-      private$cylinder_compartments <- purrr::map2(
-        .x = axis_sample,
-        .y = radius_sample,
-        .f = \(axis, radius) {
-        CylinderCompartment$new(
-          axis = axis,
-          radius = radius,
-          diffusivity = diffusivity,
-          radial_model = radial_model
-        )
-      })
+        private$cylinder_compartments <- purrr::map2(
+          .x = axis_sample,
+          .y = radius_sample,
+          .f = \(axis, radius) {
+            CylinderCompartment$new(
+              axis = axis,
+              radius = radius,
+              diffusivity = diffusivity,
+              radial_model = radial_model
+            )
+          })
+      }
     },
 
     #' @description Computes the signal attenuation predicted by the model.
@@ -116,6 +123,12 @@ CylinderBundleCompartment <- R6::R6Class(
                           echo_time = NULL,
                           n_max = 20L,
                           m_max = 50L) {
+      bvalue <- private$gamma^2 * small_delta^2 * G^2 * (big_delta - small_delta / 3)
+      work_value <- (private$axial_diffusivity - private$radial_diffusivity) * sum(direction * private$axis)^2
+      hindered_signal <- exp(-bvalue * (private$radial_diffusivity + work_value))
+      if (private$cylinder_density == 0) {
+        return(hindered_signal)
+      }
       cylinder_contribs <- purrr::map_dbl(
         .x = private$cylinder_compartments,
         .f = \(compartment) {
@@ -130,9 +143,6 @@ CylinderBundleCompartment <- R6::R6Class(
         )
       })
       restricted_signal <- mean(cylinder_contribs)
-      bvalue <- private$gamma^2 * small_delta^2 * G^2 * (big_delta - small_delta / 3)
-      work_value <- (private$axial_diffusivity - private$radial_diffusivity) * sum(direction * private$axis)^2
-      hindered_signal <- exp(-bvalue * (private$radial_diffusivity + work_value))
       return(private$cylinder_density * restricted_signal +
                (1 - private$cylinder_density) * hindered_signal)
     }
