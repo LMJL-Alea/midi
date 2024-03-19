@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/midi)](https://CRAN.R-project.org/package=midi)
 <!-- badges: end -->
 
-The goal of midi is to ...
+The goal of midi is to provide tools for simulating MR signal attenuations induced by diffusion of water in biological tissues. The package is based on the theory of diffusion MRI and provides functions for simulating the signal attenuation in pulse-gradient spin-echo MR sequences for different tissue models.
 
 ## Installation
 
@@ -40,5 +40,29 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(midi)
-## basic example code
+cylinderBundleComp <- CylinderBundleCompartment$new(
+  axis = c(0, 0, 1),
+  radius = 1e-5,
+  diffusivity = 2.0e-9,
+  axial_diffusivity = 2.0e-9,
+  radial_diffusivity = 2.0e-10,
+  cylinder_density = 0.5,
+  radial_model = "soderman",
+  voxel_size = c(1, 1, 1) * 1e-3
+)
+cylinderBundleComp$get_signal(
+  small_delta = 0.03,
+  big_delta = 0.03,
+  G = 0.040,
+  direction = c(0, 0, 1)
+)
+```
+
+You can also simulate and visualize cylinder bundles:
+
+```{r}
+density <- 0.9
+voxel_size <- 0.000010 # 10 micrometers
+out <- simulate_bundle(density, voxel_size)
+plot(out)
 ```
