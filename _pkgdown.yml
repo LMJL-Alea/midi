@@ -2,3 +2,33 @@ url: https://astamm.github.io/midi/
 template:
   bootstrap: 5
 
+reference:
+  - title: Bundle simulation
+  - contents:
+    - simulate_bundle
+    - autoplot.bundle
+    - plot.bundle
+    - plot3d.bundle
+  - title: Bundle signal prediction
+  - subtitle: Models for restricted diffusion in a cylinder
+  - contents:
+    - CallaghanCompartment
+    - NeumanCompartment
+    - SodermanCompartment
+    - StaniszCompartment
+    - VanGelderenCompartment
+    - "[.qts_sample"
+    - append
+    - rnorm_qts
+    - scale
+    - mean.qts_sample
+    - median.qts_sample
+    - autoplot.qts_sample
+    - plot.qts_sample
+  - subtitle: Classes for diffusion in cylinders
+  - contents:
+    - CylinderCompartment
+    - CylinderBundleCompartment
+  - title: Utility functions
+  - contents:
+    - run_app

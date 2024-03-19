@@ -28,5 +28,5 @@ Plots a 3D representation of a cylinder bundle from an object of class
 density <- 0.9
 voxel_size <- 0.000010 # 10 micrometers
 out <- simulate_bundle(density, voxel_size)
-rgl::plot3d(out)
+rgl::plot3d(out, widget = TRUE)
 }

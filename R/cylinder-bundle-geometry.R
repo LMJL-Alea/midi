@@ -8,6 +8,10 @@
 #' 1992). The number of cylinders is determined by the density and the voxel
 #' size.
 #'
+#' @references Aboitiz, F., Scheibel, A. B., Fisher, R. S., & Zaidel, E. (1992).
+#'   Fiber composition of the human corpus callosum. Brain research, 598(1-2),
+#'   143-153.
+#'
 #' @param density A numeric value between 0 and 1 specifying the density of the
 #'   cylinders in the voxel. Defaults to `0.9`.
 #' @param voxel_size A numeric value specifying the size of the voxel in meters.
@@ -173,7 +177,7 @@ plot.bundle <- function(x, grid_size = 100L, ...) {
 #' density <- 0.9
 #' voxel_size <- 0.000010 # 10 micrometers
 #' out <- simulate_bundle(density, voxel_size)
-#' rgl::plot3d(out)
+#' rgl::plot3d(out, widget = TRUE)
 plot3d.bundle <- function(x, widget = FALSE, ...) {
   cylinders <- x$sections[, c("x", "y")] |>
     purrr::array_tree(margin = 1) |>

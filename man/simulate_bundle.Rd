@@ -45,3 +45,8 @@ out <- simulate_bundle(density, voxel_size)
 # Actual density in the simulated substrate
 sum(out$sections$r^2 * pi) / voxel_size^2
 }
+\references{
+Aboitiz, F., Scheibel, A. B., Fisher, R. S., & Zaidel, E. (1992).
+Fiber composition of the human corpus callosum. Brain research, 598(1-2),
+143-153.
+}
