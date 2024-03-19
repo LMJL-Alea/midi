@@ -64,9 +64,9 @@
 <span>  <span class="va">axis</span>,</span>
 <span>  <span class="va">radius</span>,</span>
 <span>  <span class="va">diffusivity</span>,</span>
-<span>  <span class="va">axial_diffusivity</span>,</span>
-<span>  <span class="va">radial_diffusivity</span>,</span>
 <span>  <span class="va">cylinder_density</span>,</span>
+<span>  <span class="va">axial_diffusivity</span>,</span>
+<span>  radial_diffusivity <span class="op">=</span> <span class="va">axial_diffusivity</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">cylinder_density</span><span class="op">)</span>,</span>
 <span>  axis_concentration <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  radius_sd <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  radial_model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"soderman"</span>, <span class="st">"callaghan"</span>, <span class="st">"stanisz"</span>, <span class="st">"neuman"</span>, <span class="st">"vangelderen"</span><span class="op">)</span>,</span>
@@ -91,6 +91,11 @@ population in meters.</p></dd>
 cylinders in m\(^2\).s\(^{-1}\).</p></dd>
 
 
+<dt><code>cylinder_density</code></dt>
+<dd><p>A numeric value specifying the density of the
+cylinders in the voxel. Must be between 0 and 1.</p></dd>
+
+
 <dt><code>axial_diffusivity</code></dt>
 <dd><p>A numeric value specifying the axial diffusivity
 in the space outside the cylinders in m\(^2\).s\(^{-1}\).</p></dd>
@@ -99,12 +104,7 @@ in the space outside the cylinders in m\(^2\).s\(^{-1}\).</p></dd>
 <dt><code>radial_diffusivity</code></dt>
 <dd><p>A numeric value specifying the radial
 diffusivity in the space outside the cylinders in
-m\(^2\).s\(^{-1}\).</p></dd>
-
-
-<dt><code>cylinder_density</code></dt>
-<dd><p>A numeric value specifying the density of the
-cylinders in the voxel. Must be between 0 and 1.</p></dd>
+m\(^2\).s\(^{-1}\). Defaults to <code>axial_diffusivity * (1 - cylinder_density)</code>.</p></dd>
 
 
 <dt><code>axis_concentration</code></dt>

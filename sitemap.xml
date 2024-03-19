@@ -40,9 +40,24 @@
     <loc>https://astamm.github.io/midi/reference/VanGelderenCompartment.html</loc>
   </url>
   <url>
+    <loc>https://astamm.github.io/midi/reference/autoplot.bundle.html</loc>
+  </url>
+  <url>
     <loc>https://astamm.github.io/midi/reference/index.html</loc>
   </url>
   <url>
     <loc>https://astamm.github.io/midi/reference/midi-package.html</loc>
+  </url>
+  <url>
+    <loc>https://astamm.github.io/midi/reference/plot.bundle.html</loc>
+  </url>
+  <url>
+    <loc>https://astamm.github.io/midi/reference/plot3d.bundle.html</loc>
+  </url>
+  <url>
+    <loc>https://astamm.github.io/midi/reference/run_app.html</loc>
+  </url>
+  <url>
+    <loc>https://astamm.github.io/midi/reference/simulate_bundle.html</loc>
   </url>
 </urlset>
