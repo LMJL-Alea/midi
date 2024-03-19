@@ -19,6 +19,7 @@ reference:
     - VanGelderenCompartment
   - subtitle: Classes for diffusion in cylinders
   - contents:
+    - CylinderRadialCompartment
     - CylinderCompartment
     - CylinderBundleCompartment
   - title: Utility functions
