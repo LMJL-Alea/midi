@@ -64,7 +64,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of midi is to …</p>
+<p>The goal of midi is to provide tools for simulating MR signal attenuations induced by diffusion of water in biological tissues. The package is based on the theory of diffusion MRI and provides functions for simulating the signal attenuation in pulse-gradient spin-echo MR sequences for different tissue models.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -79,7 +79,31 @@
 <p>This is a basic example which shows you how to solve a common problem:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/astamm/midi" class="external-link">midi</a></span><span class="op">)</span></span>
-<span><span class="co">## basic example code</span></span></code></pre></div>
+<span><span class="va">cylinderBundleComp</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/CylinderBundleCompartment.html">CylinderBundleCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  axis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  radius <span class="op">=</span> <span class="fl">1e-5</span>,</span>
+<span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span>,</span>
+<span>  axial_diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span>,</span>
+<span>  radial_diffusivity <span class="op">=</span> <span class="fl">2.0e-10</span>,</span>
+<span>  cylinder_density <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  radial_model <span class="op">=</span> <span class="st">"soderman"</span>,</span>
+<span>  voxel_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="fl">1e-3</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ Number of cylinders: 1592</span></span>
+<span><span class="va">cylinderBundleComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span></span>
+<span>  small_delta <span class="op">=</span> <span class="fl">0.03</span>,</span>
+<span>  big_delta <span class="op">=</span> <span class="fl">0.03</span>,</span>
+<span>  G <span class="op">=</span> <span class="fl">0.040</span>,</span>
+<span>  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.01619326</span></span></code></pre></div>
+<p>You can also simulate and visualize cylinder bundles:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">density</span> <span class="op">&lt;-</span> <span class="fl">0.9</span></span>
+<span><span class="va">voxel_size</span> <span class="op">&lt;-</span> <span class="fl">0.000010</span> <span class="co"># 10 micrometers</span></span>
+<span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/simulate_bundle.html">simulate_bundle</a></span><span class="op">(</span><span class="va">density</span>, <span class="va">voxel_size</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
