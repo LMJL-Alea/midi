@@ -14,13 +14,14 @@ CylinderBundleCompartment <- R6::R6Class(
     #'   population in meters.
     #' @param diffusivity A numeric value specifying the diffusivity within the
     #'   cylinders in m\eqn{^2}.s\eqn{^{-1}}.
+    #' @param cylinder_density A numeric value specifying the density of the
+    #'  cylinders in the voxel. Must be between 0 and 1.
     #' @param axial_diffusivity A numeric value specifying the axial diffusivity
     #'   in the space outside the cylinders in m\eqn{^2}.s\eqn{^{-1}}.
     #' @param radial_diffusivity A numeric value specifying the radial
     #'   diffusivity in the space outside the cylinders in
-    #'   m\eqn{^2}.s\eqn{^{-1}}.
-    #' @param cylinder_density A numeric value specifying the density of the
-    #'  cylinders in the voxel. Must be between 0 and 1.
+    #'   m\eqn{^2}.s\eqn{^{-1}}. Defaults to `axial_diffusivity * (1 -
+    #'   cylinder_density)`.
     #' @param axis_concentration A numeric value specifying the concentration of
     #'   cylinders along the mean axis. Defaults to `Inf`.
     #' @param radius_sd A numeric value specifying the standard deviation of the
@@ -35,9 +36,9 @@ CylinderBundleCompartment <- R6::R6Class(
     initialize = function(axis,
                           radius,
                           diffusivity,
-                          axial_diffusivity,
-                          radial_diffusivity,
                           cylinder_density,
+                          axial_diffusivity,
+                          radial_diffusivity = axial_diffusivity * (1 - cylinder_density),
                           axis_concentration = Inf,
                           radius_sd = 0,
                           radial_model = c("soderman", "callaghan", "stanisz",

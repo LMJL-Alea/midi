@@ -47,9 +47,9 @@ Instantiates a new cylinder bundle compartment.
   axis,
   radius,
   diffusivity,
-  axial_diffusivity,
-  radial_diffusivity,
   cylinder_density,
+  axial_diffusivity,
+  radial_diffusivity = axial_diffusivity * (1 - cylinder_density),
   axis_concentration = Inf,
   radius_sd = 0,
   radial_model = c("soderman", "callaghan", "stanisz", "neuman", "vangelderen"),
@@ -69,15 +69,15 @@ population in meters.}
 \item{\code{diffusivity}}{A numeric value specifying the diffusivity within the
 cylinders in m\eqn{^2}.s\eqn{^{-1}}.}
 
+\item{\code{cylinder_density}}{A numeric value specifying the density of the
+cylinders in the voxel. Must be between 0 and 1.}
+
 \item{\code{axial_diffusivity}}{A numeric value specifying the axial diffusivity
 in the space outside the cylinders in m\eqn{^2}.s\eqn{^{-1}}.}
 
 \item{\code{radial_diffusivity}}{A numeric value specifying the radial
 diffusivity in the space outside the cylinders in
-m\eqn{^2}.s\eqn{^{-1}}.}
-
-\item{\code{cylinder_density}}{A numeric value specifying the density of the
-cylinders in the voxel. Must be between 0 and 1.}
+m\eqn{^2}.s\eqn{^{-1}}. Defaults to \code{axial_diffusivity * (1 - cylinder_density)}.}
 
 \item{\code{axis_concentration}}{A numeric value specifying the concentration of
 cylinders along the mean axis. Defaults to \code{Inf}.}

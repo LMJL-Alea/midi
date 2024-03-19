@@ -15,8 +15,14 @@ Depends:
 URL: https://github.com/astamm/midi, https://astamm.github.io/midi/
 BugReports: https://github.com/astamm/midi/issues
 Imports: 
+    cli,
+    ggplot2,
     purrr,
-    R6
+    R6,
+    rgl,
+    rlang,
+    tibble,
+    tidyr
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
