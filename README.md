@@ -77,7 +77,7 @@ devtools::install_github("astamm/midi")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+We can instantiate a cylinder bundle compartment as follows:
 
 ``` r
 library(midi)
@@ -88,6 +88,19 @@ cylinderBundleComp <- CylinderBundleCompartment$new(
   cylinder_density = 0.5,
   radial_model = "soderman"
 )
+```
+
+Note that the instantiation of the compartment requires the
+specification of the cylinder axis, radius, diffusivity, cylinder
+density, and radial model, which are only the parameters related to the
+cylinder bundle geometry.
+
+The parameters related to the experimental conditions are specified when
+calling the `get_signal` method which computes the signal attenuation
+for the compartment. In this example, we consider the following
+experimental conditions:
+
+``` r
 cylinderBundleComp$get_signal(
   small_delta = 0.03,
   big_delta = 0.03,
@@ -97,7 +110,7 @@ cylinderBundleComp$get_signal(
 #> [1] 0.01616863
 ```
 
-You can also simulate and visualize cylinder bundles:
+We can also simulate and visualize cylinder bundles:
 
 ``` r
 density <- 0.9
@@ -106,4 +119,8 @@ out <- simulate_bundle(density, voxel_size)
 plot(out)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+A 3D visualization of the cylinder bundle can be obtained powered by the
+**rgl** package is also available through an S3 specialization of the
+`rgl::plot3d()` function.
