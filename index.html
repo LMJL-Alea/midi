@@ -79,7 +79,7 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
+<p>We can instantiate a cylinder bundle compartment as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/astamm/midi" class="external-link">midi</a></span><span class="op">)</span></span>
 <span><span class="va">cylinderBundleComp</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/CylinderBundleCompartment.html">CylinderBundleCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
@@ -88,21 +88,25 @@
 <span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span>,</span>
 <span>  cylinder_density <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  radial_model <span class="op">=</span> <span class="st">"soderman"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">cylinderBundleComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Note that the instantiation of the compartment requires the specification of the cylinder axis, radius, diffusivity, cylinder density, and radial model, which are only the parameters related to the cylinder bundle geometry.</p>
+<p>The parameters related to the experimental conditions are specified when calling the <code>get_signal</code> method which computes the signal attenuation for the compartment. In this example, we consider the following experimental conditions:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cylinderBundleComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span></span>
 <span>  small_delta <span class="op">=</span> <span class="fl">0.03</span>,</span>
 <span>  big_delta <span class="op">=</span> <span class="fl">0.03</span>,</span>
 <span>  G <span class="op">=</span> <span class="fl">0.040</span>,</span>
 <span>  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.01616863</span></span></code></pre></div>
-<p>You can also simulate and visualize cylinder bundles:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>We can also simulate and visualize cylinder bundles:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">density</span> <span class="op">&lt;-</span> <span class="fl">0.9</span></span>
 <span><span class="va">voxel_size</span> <span class="op">&lt;-</span> <span class="fl">0.000010</span> <span class="co"># 10 micrometers</span></span>
 <span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/simulate_bundle.html">simulate_bundle</a></span><span class="op">(</span><span class="va">density</span>, <span class="va">voxel_size</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
+<p>A 3D visualization of the cylinder bundle can be obtained powered by the <strong>rgl</strong> package is also available through an S3 specialization of the <code><a href="https://dmurdoch.github.io/rgl/dev/reference/plot3d.html" class="external-link">rgl::plot3d()</a></code> function.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
