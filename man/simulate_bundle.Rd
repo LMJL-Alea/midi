@@ -19,7 +19,7 @@ for the simulation. Defaults to \code{1000L}.}
 \value{
 A list with the following components:
 \itemize{
-\item \code{sections}: A \code{\link[tibble:tibble]{tibble::tibble}} with the following columns:
+\item \code{sections}: A numeric matrix with 3 columns:
 \itemize{
 \item \code{x}: The x-coordinates of the centers of the cylinders;
 \item \code{y}: The y-coordinates of the centers of the cylinders;
@@ -43,7 +43,7 @@ voxel_size <- 0.000010 # 10 micrometers
 out <- simulate_bundle(density, voxel_size)
 
 # Actual density in the simulated substrate
-sum(out$sections$r^2 * pi) / voxel_size^2
+sum(out$sections[, "r"]^2 * pi) / voxel_size^2
 }
 \references{
 Aboitiz, F., Scheibel, A. B., Fisher, R. S., & Zaidel, E. (1992).

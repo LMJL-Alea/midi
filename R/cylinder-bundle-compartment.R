@@ -124,10 +124,10 @@ CylinderBundleCompartment <- R6::R6Class(
                           echo_time = NULL,
                           n_max = 20L,
                           m_max = 50L) {
-      bvalue <- private$gamma^2 * small_delta^2 * G^2 * (big_delta - small_delta / 3)
+      b <- bvalue(small_delta, big_delta, G)
       work_value <- (private$axial_diffusivity - private$radial_diffusivity) * sum(direction * private$axis)^2
-      hindered_signal <- exp(-bvalue * (private$radial_diffusivity + work_value))
-      if (private$cylinder_density == 0) {
+      hindered_signal <- exp(-b * (private$radial_diffusivity + work_value))
+      if (private$cylinder_density < .Machine$double.eps) {
         return(hindered_signal)
       }
       cylinder_contribs <- purrr::map_dbl(
@@ -153,7 +153,6 @@ CylinderBundleCompartment <- R6::R6Class(
     cylinder_compartments = NULL,
     cylinder_density = NULL,
     axial_diffusivity = NULL, # m^2.s^-1
-    radial_diffusivity = NULL, # m^2.s^-1
-    gamma = 2.675987e8 # rad.s^-1.T^-1
+    radial_diffusivity = NULL # m^2.s^-1
   )
 )

@@ -80,15 +80,7 @@ CylinderRadialCompartment <- R6::R6Class(
   ),
   private = list(
     radius = NULL,
-    diffusivity = NULL,
-    gamma = 2.675e8, # rad s^-1 T^-1,
-    besselJ_derivative = function(x, n) {
-      ifelse(
-        n == 0,
-        -besselJ(x, 1),
-        (besselJ(x, n - 1) - besselJ(x, n + 1)) / 2
-      )
-    }
+    diffusivity = NULL
   )
 )
 
@@ -106,7 +98,7 @@ SodermanCompartment <- R6::R6Class(
                           echo_time = NULL,
                           n_max = 20L,
                           m_max = 50L) {
-      x <- private$gamma * small_delta * G * private$radius
+      x <- gyromagnetic_ratio() * small_delta * G * private$radius
       if (x < .Machine$double.eps) return(1)
       (2 * besselJ(x, 1) / x)^2
     }
@@ -127,7 +119,7 @@ StaniszCompartment <- R6::R6Class(
                           echo_time = NULL,
                           n_max = 20L,
                           m_max = 50L) {
-      x <- private$gamma * small_delta * G * private$radius
+      x <- gyromagnetic_ratio() * small_delta * G * private$radius
       if (x < .Machine$double.eps) return(1)
       n <- seq_len(n_max)
       work_vector <- exp(-n^2 * pi^2 * private$diffusivity * big_delta / private$radius^2)
@@ -156,7 +148,7 @@ NeumanCompartment <- R6::R6Class(
         cli::cli_abort("The echo time must be specified
                        through the {.arg echo_time} argument.")
       }
-      first_term <- 7 * private$gamma^2 * small_delta^2 * G^2 * private$radius^4 / (48 * private$diffusivity * echo_time)
+      first_term <- 7 * gyromagnetic_ratio()^2 * small_delta^2 * G^2 * private$radius^4 / (48 * private$diffusivity * echo_time)
       second_term <- 2 - 99 * private$radius^2 / (56 * private$diffusivity * echo_time)
       second_term <- max(0, second_term)
       exp(-first_term * second_term)
@@ -180,8 +172,8 @@ CallaghanCompartment <- R6::R6Class(
                           m_max = 50L) {
       orders <- 0:n_max
       extrms <- bessel_extrema[orders + 1, 1:m_max]
-      work_value <- private$gamma * small_delta * G * private$radius
-      bessel_value <- private$besselJ_derivative(work_value, orders)
+      work_value <- gyromagnetic_ratio() * small_delta * G * private$radius
+      bessel_value <- besselJ_derivative(work_value, orders)
       first_term <- 4 * 2^(orders != 0)
       second_term <- exp(-extrms^2 * private$diffusivity * big_delta / private$radius^2)
       third_term <- 1 / (1 - (orders / extrms)^2)
@@ -208,7 +200,7 @@ VanGelderenCompartment <- R6::R6Class(
                           n_max = 20L,
                           m_max = 50L) {
       alpha_m_sq <- (bessel_extrema[2, 1:m_max] / private$radius)^2
-      K <- -2 * private$gamma^2 * G^2
+      K <- -2 * gyromagnetic_ratio()^2 * G^2
       first_term <- 2 * private$diffusivity * alpha_m_sq * small_delta - 2
       second_term <- 2 * (exp(-private$diffusivity * alpha_m_sq * small_delta) + exp(-private$diffusivity * alpha_m_sq * big_delta))
       third_term <- exp(-private$diffusivity * alpha_m_sq * (big_delta - small_delta)) + exp(-private$diffusivity * alpha_m_sq * (big_delta + small_delta))

@@ -85,15 +85,14 @@ CylinderCompartment <- R6::R6Class(
         n_max = n_max,
         m_max = m_max
       )
-      axial_signal <- exp(-private$gamma^2 * small_delta^2 * G^2 * cos_theta_sq
-                          * (big_delta - small_delta / 3) * private$diffusivity)
+      b <- bvalue(small_delta, big_delta, G)
+      axial_signal <- exp(-b * cos_theta_sq * private$diffusivity)
       radial_signal * axial_signal
     }
   ),
   private = list(
     axis = NULL,
     diffusivity = NULL,
-    gamma = 2.675e8, # rad s^-1 T^-1,
     radial_compartment = NULL
   )
 )

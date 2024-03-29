@@ -20,7 +20,7 @@
 #'   for the simulation. Defaults to `1000L`.
 #'
 #' @return A list with the following components:
-#' - `sections`: A [`tibble::tibble`] with the following columns:
+#' - `sections`: A numeric matrix with 3 columns:
 #'   - `x`: The x-coordinates of the centers of the cylinders;
 #'   - `y`: The y-coordinates of the centers of the cylinders;
 #'   - `r`: The radii of the cylinders.
@@ -33,7 +33,7 @@
 #' out <- simulate_bundle(density, voxel_size)
 #'
 #' # Actual density in the simulated substrate
-#' sum(out$sections$r^2 * pi) / voxel_size^2
+#' sum(out$sections[, "r"]^2 * pi) / voxel_size^2
 simulate_bundle <- function(density = 0.9, voxel_size = 1e-5, max_iter = 1000L) {
   kappa <- 5.3316
   scale <- 1.0242e-7
@@ -81,9 +81,9 @@ simulate_bundle <- function(density = 0.9, voxel_size = 1e-5, max_iter = 1000L) 
     y_centers[i] <- y
   }
 
-  df <- tibble::tibble(x = x_centers, y = y_centers, r = radii)
-  df <- tidyr::drop_na(df)
-  out <- list(sections = df, voxel_size = voxel_size)
+  sections <- cbind(x = x_centers, y = y_centers, r = radii)
+  sections <- stats::na.omit(sections)
+  out <- list(sections = sections, voxel_size = voxel_size)
   class(out) <- c("bundle", class(out))
   out
 }
@@ -117,7 +117,7 @@ autoplot.bundle <- function(object, grid_size = 100L, ...) {
   sections <- object$sections |>
     purrr::array_tree(margin = 1) |>
     purrr::imap(\(vals, id) {
-      res <- tibble::tibble(
+      res <- data.frame(
         x = vals[1] + vals[3] * cos(grd),
         y = vals[2] + vals[3] * sin(grd)
       )
@@ -181,11 +181,9 @@ plot.bundle <- function(x, grid_size = 100L, ...) {
 plot3d.bundle <- function(x, widget = FALSE, ...) {
   cylinders <- x$sections[, c("x", "y")] |>
     purrr::array_tree(margin = 1) |>
-    purrr::map(\(v) tidyr::crossing(
-      tibble::tibble(x = v[1], y = v[2]),
-      z = c(0, 1)
-    ))
-  radii <- x$sections$r
+    purrr::map(\(v) cbind(x = v[1], y = v[2])) |>
+    purrr::map(\(v) rbind(cbind(v, z = 0), cbind(v, z = 1)))
+  radii <- x$sections[, "r"]
   rglcylinders <- purrr::map2(cylinders, radii, \(.cylinder, .radius) {
     cyl <- rgl::cylinder3d(
       center = .cylinder,

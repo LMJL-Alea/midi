@@ -7,7 +7,7 @@
 run_app()
 }
 \value{
-Nothing, but starts the Shiny app in the default web browser.
+Nothing, but launches the Shiny app in the default web browser.
 }
 \description{
 This is a helper function to run the MIDI Shiny web application in the
