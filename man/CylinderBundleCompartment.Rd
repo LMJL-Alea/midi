@@ -16,11 +16,8 @@ cylinderBundleComp <- CylinderBundleCompartment$new(
   axis = c(0, 0, 1),
   radius = 1e-5,
   diffusivity = 2.0e-9,
-  axial_diffusivity = 2.0e-9,
-  radial_diffusivity = 2.0e-10,
   cylinder_density = 0.5,
-  radial_model = "soderman",
-  voxel_size = c(1, 1, 1) * 1e-3
+  radial_model = "soderman"
 )
 cylinderBundleComp$get_signal(
   small_delta = 0.03,
@@ -48,36 +45,43 @@ Instantiates a new cylinder bundle compartment.
   radius,
   diffusivity,
   cylinder_density,
-  axial_diffusivity,
-  radial_diffusivity = axial_diffusivity * (1 - cylinder_density),
+  axial_diffusivity = NULL,
+  radial_diffusivity = NULL,
+  n_cylinders = 1L,
   axis_concentration = Inf,
   radius_sd = 0,
-  radial_model = c("soderman", "callaghan", "stanisz", "neuman", "vangelderen"),
-  voxel_size = rep(0.002, 3)
+  radial_model = c("soderman", "callaghan", "stanisz", "neuman", "vangelderen")
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{axis}}{A length-3 numeric vector specifying the mean axis of the
-cylinder population.}
+\item{\code{axis}}{A numeric vector of length 3 and unit norm specifying the
+mean axis of the cylinder population.}
 
-\item{\code{radius}}{A numeric value specifying the mean radius of the cylinder
-population in meters.}
+\item{\code{radius}}{A positive numeric value specifying the mean radius of the
+cylinder population in meters.}
 
-\item{\code{diffusivity}}{A numeric value specifying the diffusivity within the
-cylinders in m\eqn{^2}.s\eqn{^{-1}}.}
+\item{\code{diffusivity}}{A positive numeric value specifying the diffusivity
+within the cylinders in m\eqn{^2}.s\eqn{^{-1}}.}
 
 \item{\code{cylinder_density}}{A numeric value specifying the density of the
 cylinders in the voxel. Must be between 0 and 1.}
 
 \item{\code{axial_diffusivity}}{A numeric value specifying the axial diffusivity
-in the space outside the cylinders in m\eqn{^2}.s\eqn{^{-1}}.}
+in the space outside the cylinders in m\eqn{^2}.s\eqn{^{-1}}. If not
+provided, defaults to a tortuosity model reducing the intrinsic
+diffusivity depending on orientation dispersion. Defaults to \code{NULL}.}
 
 \item{\code{radial_diffusivity}}{A numeric value specifying the radial
 diffusivity in the space outside the cylinders in
-m\eqn{^2}.s\eqn{^{-1}}. Defaults to \code{axial_diffusivity * (1 - cylinder_density)}.}
+m\eqn{^2}.s\eqn{^{-1}}. If not provided, defaults to a tortuosity model
+reducing the axial diffusivity depending on radius heterogeneity.
+Defaults to \code{NULL}.}
+
+\item{\code{n_cylinders}}{An integer value specifying the number of cylinders in
+the bundle. Defaults to \code{1L}.}
 
 \item{\code{axis_concentration}}{A numeric value specifying the concentration of
 cylinders along the mean axis. Defaults to \code{Inf}.}
@@ -88,9 +92,6 @@ radius of the cylinder population in meters. Defaults to \code{0}.}
 \item{\code{radial_model}}{A character string specifying the radial model to
 use. Choices are \code{"soderman"}, \code{"callaghan"}, \code{"stanisz"}, \code{"neuman"},
 and \code{"vangelderen"}. Defaults to \code{"soderman"}.}
-
-\item{\code{voxel_size}}{A length-3 numeric vector specifying the size of the
-voxel in meters. Defaults to \code{c(2e-3, 2e-3, 2e-3)}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -149,11 +150,8 @@ A numeric value storing the predicted signal attenuation.
   axis = c(0, 0, 1),
   radius = 1e-5,
   diffusivity = 2.0e-9,
-  axial_diffusivity = 2.0e-9,
-  radial_diffusivity = 2.0e-10,
   cylinder_density = 0.5,
-  radial_model = "soderman",
-  voxel_size = c(1, 1, 1) * 1e-3
+  radial_model = "soderman"
 )
 cylinderBundleComp$get_signal(
   small_delta = 0.03,

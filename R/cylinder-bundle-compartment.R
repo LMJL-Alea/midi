@@ -8,20 +8,25 @@ CylinderBundleCompartment <- R6::R6Class(
   public = list(
     #' @description Instantiates a new cylinder bundle compartment.
     #'
-    #' @param axis A length-3 numeric vector specifying the mean axis of the
-    #'  cylinder population.
-    #' @param radius A numeric value specifying the mean radius of the cylinder
-    #'   population in meters.
-    #' @param diffusivity A numeric value specifying the diffusivity within the
-    #'   cylinders in m\eqn{^2}.s\eqn{^{-1}}.
+    #' @param axis A numeric vector of length 3 and unit norm specifying the
+    #'   mean axis of the cylinder population.
+    #' @param radius A positive numeric value specifying the mean radius of the
+    #'   cylinder population in meters.
+    #' @param diffusivity A positive numeric value specifying the diffusivity
+    #'   within the cylinders in m\eqn{^2}.s\eqn{^{-1}}.
     #' @param cylinder_density A numeric value specifying the density of the
     #'  cylinders in the voxel. Must be between 0 and 1.
     #' @param axial_diffusivity A numeric value specifying the axial diffusivity
-    #'   in the space outside the cylinders in m\eqn{^2}.s\eqn{^{-1}}.
+    #'   in the space outside the cylinders in m\eqn{^2}.s\eqn{^{-1}}. If not
+    #'   provided, defaults to a tortuosity model reducing the intrinsic
+    #'   diffusivity depending on orientation dispersion. Defaults to `NULL`.
     #' @param radial_diffusivity A numeric value specifying the radial
     #'   diffusivity in the space outside the cylinders in
-    #'   m\eqn{^2}.s\eqn{^{-1}}. Defaults to `axial_diffusivity * (1 -
-    #'   cylinder_density)`.
+    #'   m\eqn{^2}.s\eqn{^{-1}}. If not provided, defaults to a tortuosity model
+    #'   reducing the axial diffusivity depending on radius heterogeneity.
+    #'   Defaults to `NULL`.
+    #' @param n_cylinders An integer value specifying the number of cylinders in
+    #'   the bundle. Defaults to `1L`.
     #' @param axis_concentration A numeric value specifying the concentration of
     #'   cylinders along the mean axis. Defaults to `Inf`.
     #' @param radius_sd A numeric value specifying the standard deviation of the
@@ -29,38 +34,65 @@ CylinderBundleCompartment <- R6::R6Class(
     #' @param radial_model A character string specifying the radial model to
     #'   use. Choices are `"soderman"`, `"callaghan"`, `"stanisz"`, `"neuman"`,
     #'   and `"vangelderen"`. Defaults to `"soderman"`.
-    #' @param voxel_size A length-3 numeric vector specifying the size of the
-    #'   voxel in meters. Defaults to `c(2e-3, 2e-3, 2e-3)`.
     #'
     #' @return An instance of the [`CylinderBundleCompartment`] class.
     initialize = function(axis,
                           radius,
                           diffusivity,
                           cylinder_density,
-                          axial_diffusivity,
-                          radial_diffusivity = axial_diffusivity * (1 - cylinder_density),
+                          axial_diffusivity = NULL,
+                          radial_diffusivity = NULL,
+                          n_cylinders = 1L,
                           axis_concentration = Inf,
                           radius_sd = 0,
                           radial_model = c("soderman", "callaghan", "stanisz",
-                                           "neuman", "vangelderen"),
-                          voxel_size = rep(2e-3, 3)) {
+                                           "neuman", "vangelderen")) {
       radial_model <- rlang::arg_match(radial_model)
 
+      # Set axis
+      if (length(axis) != 3L || abs(sum(axis^2) - 1) > sqrt(.Machine$double.eps))
+        cli::cli_abort("The axis must be a length-3 unit vector.")
       private$axis <- axis
+
+      # Set radius
+      if (radius <= 0)
+        cli::cli_abort("The radius must be positive.")
+      private$radius <- radius
+
+      # Set diffusivity
+      if (diffusivity <= 0)
+        cli::cli_abort("The diffusivity must be positive.")
+      private$diffusivity <- diffusivity
+
+      # Set cylinder density
       if (cylinder_density < 0 || cylinder_density > 1) {
         cli::cli_abort("The cylinder density must be between 0 and 1.")
       }
       private$cylinder_density <- cylinder_density
+
+      # Set axial diffusivity
+      if (is.null(axial_diffusivity)) {
+        if (is.infinite(axis_concentration)) {
+          axial_diffusivity <- diffusivity
+        } else {
+          axial_diffusivity <- diffusivity * concentration_index(axis_concentration)^2
+        }
+      } else {
+        if (axial_diffusivity > diffusivity)
+          cli::cli_abort("The axial diffusivity should not be greater than the intrinsic diffusivity.")
+      }
       private$axial_diffusivity <- axial_diffusivity
+
+      # Set radial diffusivity
+      if (is.null(radial_diffusivity)) {
+        radial_diffusivity <- axial_diffusivity * (1 - 0.8 * cylinder_density)
+      } else {
+        if (radial_diffusivity > axial_diffusivity)
+          cli::cli_abort("The radial diffusivity should not be greater than the axial diffusivity.")
+      }
       private$radial_diffusivity <- radial_diffusivity
 
       if (cylinder_density > 0) {
-        voxel_volume <- prod(voxel_size)
-        L <- min(voxel_size)
-        n_cylinders <- round(voxel_volume * cylinder_density /
-                               (pi * radius[1]^2 * L), digits = 0)
-        cli::cli_alert_info("Number of cylinders: {n_cylinders}")
-
         if (is.infinite(axis_concentration) && radius_sd == 0) {
           axis_sample <- list(axis)
           radius_sample <- list(radius)
@@ -108,11 +140,8 @@ CylinderBundleCompartment <- R6::R6Class(
     #'   axis = c(0, 0, 1),
     #'   radius = 1e-5,
     #'   diffusivity = 2.0e-9,
-    #'   axial_diffusivity = 2.0e-9,
-    #'   radial_diffusivity = 2.0e-10,
     #'   cylinder_density = 0.5,
-    #'   radial_model = "soderman",
-    #'   voxel_size = c(1, 1, 1) * 1e-3
+    #'   radial_model = "soderman"
     #' )
     #' cylinderBundleComp$get_signal(
     #'   small_delta = 0.03,
@@ -150,6 +179,8 @@ CylinderBundleCompartment <- R6::R6Class(
   ),
   private = list(
     axis = NULL,
+    radius = NULL,
+    diffusivity = NULL,
     cylinder_compartments = NULL,
     cylinder_density = NULL,
     axial_diffusivity = NULL, # m^2.s^-1

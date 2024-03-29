@@ -1,13 +1,10 @@
-test_that("`CylinderCompartment` class works", {
+test_that("`CylinderBundleCompartment` class works", {
   cbComp <- CylinderBundleCompartment$new(
     axis = c(0, 0, 1),
     radius = 1e-5,
     diffusivity = 2.0e-9,
     cylinder_density = 0.5,
-    axial_diffusivity = 2.0e-9,
-    radial_diffusivity = 2.0e-10,
-    radial_model = "soderman",
-    voxel_size = c(2, 2, 2) * 1e-3
+    radial_model = "soderman"
   )
   out <- cbComp$get_signal(
     small_delta = 0.03,
