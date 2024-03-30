@@ -128,4 +128,4 @@ A 3D visualization of the cylinder bundle can be obtained powered by the
 p <- plot3d(out)
 ```
 
-<iframe src="/Users/stamm-a/Softs/midi/man/figures/README-plotly.html" width="100%" height="600" scrolling="no" seamless="seamless" frameBorder="0"></iframe>
+<iframe src="man/figures/README-plotly.html" width="100%" height="600" scrolling="no" seamless="seamless" frameBorder="0"></iframe>

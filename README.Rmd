@@ -128,7 +128,7 @@ p <- plot3d(out)
 ```
 
 ```{r, echo = FALSE}
-file <- file.path(getwd(), "man", "figures", "README-plotly.html")
+file <- file.path("man", "figures", "README-plotly.html")
 htmlwidgets::saveWidget(p, file)
 htmltools::tags$iframe(
   src = file,
