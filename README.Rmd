@@ -1,7 +1,5 @@
 ---
-output:
-  html_document:
-    keep_md: true
+output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -122,9 +120,6 @@ out <- simulate_bundle(density, voxel_size)
 plot(out)
 ```
 
-A 3D visualization of the cylinder bundle can be obtained powered by the
-[**plotly**](https://plotly.com/r/) package:
-
-```{r}
-plot3d(out)
-```
+A 3D visualization of the cylinder bundle powered by the
+[**plotly**](https://plotly.com/r/) package can be obtained by calling
+`plot3d()`. See the documentation online at <https://astamm.github.io/midi/reference/plot3d.html> for more details.
