@@ -5,11 +5,11 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/astamm/midi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/astamm/midi/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/lmjl-alea/midi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lmjl-alea/midi/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/astamm/midi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/astamm/midi?branch=main)
-[![test-coverage](https://github.com/astamm/midi/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/astamm/midi/actions/workflows/test-coverage.yaml)
-[![pkgdown](https://github.com/astamm/midi/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/astamm/midi/actions/workflows/pkgdown.yaml)
+coverage](https://codecov.io/gh/lmjl-alea/midi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/lmjl-alea/midi?branch=main)
+[![test-coverage](https://github.com/lmjl-alea/midi/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/lmjl-alea/midi/actions/workflows/test-coverage.yaml)
+[![pkgdown](https://github.com/lmjl-alea/midi/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/lmjl-alea/midi/actions/workflows/pkgdown.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/midi)](https://CRAN.R-project.org/package=midi)
 <!-- badges: end -->
@@ -51,8 +51,8 @@ millimeters, therefore containing many different tissue types. In
 addition, depending on the experimental conditions (number, duration and
 strength of the gradients and time between two consecutive gradients),
 the MR signal might not be sensitive to all tissue types in the voxel.
-The [**midi**](https://astamm.github.io/midi/) package is meant to list
-the tissue models that have been proposed in the literature and to
+The [**midi**](https://lmjl-alea.github.io/midi/) package is meant to
+list the tissue models that have been proposed in the literature and to
 provide tools to simulate the MR signal attenuation predicted by these
 models under different experimental conditions.
 
@@ -72,7 +72,7 @@ You can install the development version of midi from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("astamm/midi")
+devtools::install_github("lmjl-alea/midi")
 ```
 
 ## Example
@@ -124,4 +124,5 @@ plot(out)
 A 3D visualization of the cylinder bundle powered by the
 [**plotly**](https://plotly.com/r/) package can be obtained by calling
 `plot3d()`. See the documentation online at
-<https://astamm.github.io/midi/reference/plot3d.html> for more details.
+<https://lmjl-alea.github.io/midi/reference/plot3d.html> for more
+details.

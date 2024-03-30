@@ -11,9 +11,9 @@ A collection of diffusion models and tools to extract microstructure information
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/astamm/midi}
-  \item \url{https://astamm.github.io/midi/}
-  \item Report bugs at \url{https://github.com/astamm/midi/issues}
+  \item \url{https://github.com/lmjl-alea/midi}
+  \item \url{https://lmjl-alea.github.io/midi/}
+  \item Report bugs at \url{https://github.com/lmjl-alea/midi/issues}
 }
 
 }
