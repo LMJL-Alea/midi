@@ -106,7 +106,11 @@
 <span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/simulate_bundle.html">simulate_bundle</a></span><span class="op">(</span><span class="va">density</span>, <span class="va">voxel_size</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
-<p>A 3D visualization of the cylinder bundle can be obtained powered by the <strong>rgl</strong> package is also available through an S3 specialization of the <code><a href="https://dmurdoch.github.io/rgl/dev/reference/plot3d.html" class="external-link">rgl::plot3d()</a></code> function.</p>
+<p>A 3D visualization of the cylinder bundle can be obtained powered by the <a href="https://plotly.com/r/" class="external-link"><strong>plotly</strong></a> package:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot3d.html">plot3d</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></code></pre></div>
+<iframe src="/Users/stamm-a/Softs/midi/man/figures/README-plotly.html" width="100%" height="600" scrolling="no" seamless="seamless" frameborder="0">
+</iframe>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

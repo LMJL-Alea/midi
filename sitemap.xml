@@ -43,6 +43,9 @@
     <loc>https://astamm.github.io/midi/reference/autoplot.bundle.html</loc>
   </url>
   <url>
+    <loc>https://astamm.github.io/midi/reference/figures/README-plotly.html</loc>
+  </url>
+  <url>
     <loc>https://astamm.github.io/midi/reference/index.html</loc>
   </url>
   <url>
@@ -52,7 +55,7 @@
     <loc>https://astamm.github.io/midi/reference/plot.bundle.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/plot3d.bundle.html</loc>
+    <loc>https://astamm.github.io/midi/reference/plot3d.html</loc>
   </url>
   <url>
     <loc>https://astamm.github.io/midi/reference/run_app.html</loc>
