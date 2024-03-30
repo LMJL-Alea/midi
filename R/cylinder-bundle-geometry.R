@@ -29,7 +29,7 @@
 #'
 #' @examples
 #' density <- 0.9
-#' voxel_size <- 0.000010 # 10 micrometers
+#' voxel_size <- 0.000005 # 5 micrometers
 #' out <- simulate_bundle(density, voxel_size)
 #'
 #' # Actual density in the simulated substrate
@@ -109,7 +109,7 @@ simulate_bundle <- function(density = 0.9, voxel_size = 1e-5, max_iter = 1000L) 
 #' @importFrom rlang .data
 #' @examples
 #' density <- 0.9
-#' voxel_size <- 0.000010 # 10 micrometers
+#' voxel_size <- 0.000005 # 5 micrometers
 #' out <- simulate_bundle(density, voxel_size)
 #' ggplot2::autoplot(out)
 autoplot.bundle <- function(object, grid_size = 100L, ...) {
@@ -150,7 +150,7 @@ autoplot.bundle <- function(object, grid_size = 100L, ...) {
 #' @importFrom graphics plot
 #' @examples
 #' density <- 0.9
-#' voxel_size <- 0.000010 # 10 micrometers
+#' voxel_size <- 0.000005 # 5 micrometers
 #' out <- simulate_bundle(density, voxel_size)
 #' plot(out)
 plot.bundle <- function(x, grid_size = 100L, ...) {
@@ -175,7 +175,7 @@ plot.bundle <- function(x, grid_size = 100L, ...) {
 #'
 #' @examples
 #' density <- 0.9
-#' voxel_size <- 0.000010 # 10 micrometers
+#' voxel_size <- 0.000005 # 5 micrometers
 #' out <- simulate_bundle(density, voxel_size)
 #' plot3d(out)
 plot3d <- function(b, show_linear_mesh = FALSE) {

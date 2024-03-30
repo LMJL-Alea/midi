@@ -25,7 +25,7 @@ Plots a 3D representation of a cylinder bundle from an object of class
 }
 \examples{
 density <- 0.9
-voxel_size <- 0.000010 # 10 micrometers
+voxel_size <- 0.000005 # 5 micrometers
 out <- simulate_bundle(density, voxel_size)
 plot3d(out)
 }

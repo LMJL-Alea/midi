@@ -39,7 +39,7 @@ size.
 }
 \examples{
 density <- 0.9
-voxel_size <- 0.000010 # 10 micrometers
+voxel_size <- 0.000005 # 5 micrometers
 out <- simulate_bundle(density, voxel_size)
 
 # Actual density in the simulated substrate
