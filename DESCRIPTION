@@ -17,9 +17,9 @@ BugReports: https://github.com/astamm/midi/issues
 Imports: 
     cli,
     ggplot2,
+    plotly,
     purrr,
     R6,
-    rgl,
     rlang
 Suggests: 
     testthat (>= 3.0.0)
