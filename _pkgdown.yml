@@ -8,7 +8,7 @@ reference:
     - simulate_bundle
     - autoplot.bundle
     - plot.bundle
-    - plot3d.bundle
+    - plot3d
   - title: Bundle signal prediction
   - subtitle: Models for restricted diffusion in a cylinder
   - contents:
