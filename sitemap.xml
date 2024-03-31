@@ -1,63 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://astamm.github.io/midi/404.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/404.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/LICENSE-text.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/LICENSE.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/authors.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/authors.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/index.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/index.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/CallaghanCompartment.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/news/index.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/CylinderBundleCompartment.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/CallaghanCompartment.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/CylinderCompartment.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/CylinderBundleCompartment.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/CylinderRadialCompartment.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/CylinderCompartment.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/NeumanCompartment.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/CylinderRadialCompartment.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/SodermanCompartment.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/NeumanCompartment.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/StaniszCompartment.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/SodermanCompartment.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/VanGelderenCompartment.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/StaniszCompartment.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/autoplot.bundle.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/VanGelderenCompartment.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/index.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/autoplot.bundle.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/midi-package.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/plot.bundle.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/midi-package.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/plot3d.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/plot.bundle.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/run_app.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/plot3d.html</loc>
   </url>
   <url>
-    <loc>https://astamm.github.io/midi/reference/simulate_bundle.html</loc>
+    <loc>https://lmjl-alea.github.io/midi/reference/run_app.html</loc>
+  </url>
+  <url>
+    <loc>https://lmjl-alea.github.io/midi/reference/simulate_bundle.html</loc>
   </url>
 </urlset>

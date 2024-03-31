@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="index.html">midi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,9 @@
 <li class="nav-item">
   <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="news/index.html">Changelog</a>
+</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -47,7 +50,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/astamm/midi/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/lmjl-alea/midi/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -66,7 +69,7 @@
 
 <p>The Human brain can be seen as grey matter and white matter. The former is composed of cell bodies and dendrites, while the latter is composed of axons and glial cells. Neurons are made up of a cell body, dendrites, and an axon. The cell body contains the nucleus and other organelles, and the dendrites receive electrical signals from other neurons. The axon is a long, thin projection that carries signals away from the cell body to other neurons. The axons are surrounded by a myelin sheath, which is a fatty substance that insulates the axons and speeds up the transmission of electrical signals. The myelin sheath is not continuous, but rather has small gaps called nodes of Ranvier. The axons are bundled together in what is called a fiber bundle. The glial cells are responsible for maintaining the homeostasis of the brain and providing support and protection for the axons.</p>
 <p>The scale of these tissues (of the order of micrometers) makes them invisible to the naked eye. However, a robust reconstruction of the brain microstructure is key to understanding brain function and dysfunction. This is where diffusion magnetic resonance imaging (MRI) comes in. Water molcules are in constant random motion due to their thermal energy and our body is made of 80% of water. The diffusion of water molecules in the brain is restricted by the cell membranes and myelin sheaths, and is faster along the axons than perpendicular to them. This anisotropic diffusion can be measured using diffusion MRI. Diffusion MRI is a non-invasive imaging technique which makes the magnetization of protons sensitive to the diffusion by applying so-called magnetic field diffusion gradients. The signal attenuation in diffusion MRI is then used to infer the microstructure of the brain.</p>
-<p>An enormous amount of research has been done to understand the relationship between the signal attenuation and the microstructure of the brain and many parametric models have been devised to describe this relationship. However, the spatial resolution of diffusion MRI is limited by the voxel size, which is typically in the order of millimeters, therefore containing many different tissue types. In addition, depending on the experimental conditions (number, duration and strength of the gradients and time between two consecutive gradients), the MR signal might not be sensitive to all tissue types in the voxel. The <a href="https://astamm.github.io/midi/"><strong>midi</strong></a> package is meant to list the tissue models that have been proposed in the literature and to provide tools to simulate the MR signal attenuation predicted by these models under different experimental conditions.</p>
+<p>An enormous amount of research has been done to understand the relationship between the signal attenuation and the microstructure of the brain and many parametric models have been devised to describe this relationship. However, the spatial resolution of diffusion MRI is limited by the voxel size, which is typically in the order of millimeters, therefore containing many different tissue types. In addition, depending on the experimental conditions (number, duration and strength of the gradients and time between two consecutive gradients), the MR signal might not be sensitive to all tissue types in the voxel. The <a href="https://lmjl-alea.github.io/midi/"><strong>midi</strong></a> package is meant to list the tissue models that have been proposed in the literature and to provide tools to simulate the MR signal attenuation predicted by these models under different experimental conditions.</p>
 <p>The package is then used in an eponymous Shiny web application which provides a user-friendly interface for the package and allows to interactively visualize the MR signal attenuation induced by the different tissue models and design experimental conditions to optimize the sensitivity to specific tissue parameters. The Shiny web application can be launched with the <code><a href="reference/run_app.html">midi::run_app()</a></code> function for convenience but can be directly accessed at the following URL: <a href="https://midi-pastrami.apps.math.cnrs.fr/" class="external-link uri">https://midi-pastrami.apps.math.cnrs.fr/</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -74,14 +77,14 @@
 <p>You can install the development version of midi from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"astamm/midi"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"lmjl-alea/midi"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>We can instantiate a cylinder bundle compartment as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/astamm/midi" class="external-link">midi</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lmjl-alea/midi" class="external-link">midi</a></span><span class="op">)</span></span>
 <span><span class="va">cylinderBundleComp</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/CylinderBundleCompartment.html">CylinderBundleCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
 <span>  axis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  radius <span class="op">=</span> <span class="fl">1e-5</span>,</span>
@@ -106,14 +109,14 @@
 <span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/simulate_bundle.html">simulate_bundle</a></span><span class="op">(</span><span class="va">density</span>, <span class="va">voxel_size</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
-<p>A 3D visualization of the cylinder bundle powered by the <a href="https://plotly.com/r/" class="external-link"><strong>plotly</strong></a> package can be obtained by calling <code><a href="reference/plot3d.html">plot3d()</a></code>. See the documentation online at <a href="https://astamm.github.io/midi/reference/plot3d.html" class="uri">https://astamm.github.io/midi/reference/plot3d.html</a> for more details.</p>
+<p>A 3D visualization of the cylinder bundle powered by the <a href="https://plotly.com/r/" class="external-link"><strong>plotly</strong></a> package can be obtained by calling <code><a href="reference/plot3d.html">plot3d()</a></code>. See the documentation online at <a href="https://lmjl-alea.github.io/midi/reference/plot3d.html" class="uri">https://lmjl-alea.github.io/midi/reference/plot3d.html</a> for more details.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/astamm/midi/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/astamm/midi/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/lmjl-alea/midi/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/lmjl-alea/midi/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -143,10 +146,10 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/astamm/midi/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/astamm/midi/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/astamm/midi?branch=main" class="external-link"><img src="https://codecov.io/gh/astamm/midi/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/astamm/midi/actions/workflows/test-coverage.yaml" class="external-link"><img src="https://github.com/astamm/midi/actions/workflows/test-coverage.yaml/badge.svg" alt="test-coverage"></a></li>
-<li><a href="https://github.com/astamm/midi/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/astamm/midi/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a></li>
+<li><a href="https://github.com/lmjl-alea/midi/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/lmjl-alea/midi/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/lmjl-alea/midi?branch=main" class="external-link"><img src="https://codecov.io/gh/lmjl-alea/midi/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/lmjl-alea/midi/actions/workflows/test-coverage.yaml" class="external-link"><img src="https://github.com/lmjl-alea/midi/actions/workflows/test-coverage.yaml/badge.svg" alt="test-coverage"></a></li>
+<li><a href="https://github.com/lmjl-alea/midi/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/lmjl-alea/midi/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a></li>
 <li><a href="https://CRAN.R-project.org/package=midi" class="external-link"><img src="https://www.r-pkg.org/badges/version/midi" alt="CRAN status"></a></li>
 </ul>
 </div>
