@@ -14,7 +14,7 @@ This is a helper function to run the MIDI Shiny web application in the
 default web browser.
 }
 \examples{
-\dontrun{
+\donttest{
   run_app()
 }
 }

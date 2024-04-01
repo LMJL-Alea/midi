@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/lmjl-alea/midi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lmjl-alea/midi/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/LMJL-Alea/midi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/LMJL-Alea/midi/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/lmjl-alea/midi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/lmjl-alea/midi?branch=main)
 [![test-coverage](https://github.com/lmjl-alea/midi/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/lmjl-alea/midi/actions/workflows/test-coverage.yaml)

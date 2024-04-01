@@ -7,6 +7,12 @@
 A class to model restricted diffusion in a cylinder using the
 Van Gelderen's model.
 }
+\references{
+Vangelderen, P., DesPres, D., Vanzijl, P. C. M., & Moonen, C. T.
+W. (1994). Evaluation of restricted diffusion in cylinders. Phosphocreatine
+in rabbit leg muscle. Journal of Magnetic Resonance, Series B, 103(3),
+255-260.
+}
 \section{Super class}{
 \code{\link[midi:CylinderRadialCompartment]{midi::CylinderRadialCompartment}} -> \code{VanGelderenCompartment}
 }

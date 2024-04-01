@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # midi
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/lmjl-alea/midi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lmjl-alea/midi/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/LMJL-Alea/midi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/LMJL-Alea/midi/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/lmjl-alea/midi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/lmjl-alea/midi?branch=main)
 [![test-coverage](https://github.com/lmjl-alea/midi/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/lmjl-alea/midi/actions/workflows/test-coverage.yaml)
 [![pkgdown](https://github.com/lmjl-alea/midi/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/lmjl-alea/midi/actions/workflows/pkgdown.yaml)
@@ -57,10 +57,10 @@ typically in the order of millimeters, therefore containing many different
 tissue types. In addition, depending on the experimental conditions (number,
 duration and strength of the gradients and time between two consecutive
 gradients), the MR signal might not be sensitive to all tissue types in the
-voxel. The [**midi**](https://lmjl-alea.github.io/midi/) package is meant to list
-the tissue models that have been proposed in the literature and to provide tools
-to simulate the MR signal attenuation predicted by these models under different
-experimental conditions.
+voxel. The [**midi**](https://lmjl-alea.github.io/midi/) package is meant to
+list the tissue models that have been proposed in the literature and to provide
+tools to simulate the MR signal attenuation predicted by these models under
+different experimental conditions.
 
 The package is then used in an eponymous Shiny web application which provides a
 user-friendly interface for the package and allows to interactively visualize

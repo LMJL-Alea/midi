@@ -50,7 +50,8 @@ Instantiates a new cylinder bundle compartment.
   n_cylinders = 1L,
   axis_concentration = Inf,
   radius_sd = 0,
-  radial_model = c("soderman", "callaghan", "stanisz", "neuman", "vangelderen")
+  radial_model = c("soderman", "callaghan", "stanisz", "neuman", "vangelderen"),
+  seed = 1234
 )}\if{html}{\out{</div>}}
 }
 
@@ -92,6 +93,9 @@ radius of the cylinder population in meters. Defaults to \code{0}.}
 \item{\code{radial_model}}{A character string specifying the radial model to
 use. Choices are \code{"soderman"}, \code{"callaghan"}, \code{"stanisz"}, \code{"neuman"},
 and \code{"vangelderen"}. Defaults to \code{"soderman"}.}
+
+\item{\code{seed}}{An integer value specifying the seed for the random number
+generator. Defaults to \code{1234}.}
 }
 \if{html}{\out{</div>}}
 }

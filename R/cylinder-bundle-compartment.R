@@ -34,6 +34,8 @@ CylinderBundleCompartment <- R6::R6Class(
     #' @param radial_model A character string specifying the radial model to
     #'   use. Choices are `"soderman"`, `"callaghan"`, `"stanisz"`, `"neuman"`,
     #'   and `"vangelderen"`. Defaults to `"soderman"`.
+    #' @param seed An integer value specifying the seed for the random number
+    #'   generator. Defaults to `1234`.
     #'
     #' @return An instance of the [`CylinderBundleCompartment`] class.
     initialize = function(axis,
@@ -46,7 +48,8 @@ CylinderBundleCompartment <- R6::R6Class(
                           axis_concentration = Inf,
                           radius_sd = 0,
                           radial_model = c("soderman", "callaghan", "stanisz",
-                                           "neuman", "vangelderen")) {
+                                           "neuman", "vangelderen"),
+                          seed = 1234) {
       radial_model <- rlang::arg_match(radial_model)
 
       # Set axis
@@ -97,7 +100,7 @@ CylinderBundleCompartment <- R6::R6Class(
           axis_sample <- list(axis)
           radius_sample <- list(radius)
         } else {
-          withr::with_seed(1234, {
+          withr::with_seed(seed, {
             axis_sample <- rwatson(n_cylinders, axis, axis_concentration)
             radius_sample <- rgamma(n_cylinders, radius, radius_sd)
           })

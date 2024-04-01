@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'   run_app()
 #' }
 run_app <- function() {

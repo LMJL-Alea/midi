@@ -7,6 +7,11 @@
 A class to model restricted diffusion in a cylinder using the
 Soderman's model.
 }
+\references{
+Söderman, O., & Jönsson, B. (1995). Restricted diffusion in
+cylindrical geometry. Journal of Magnetic Resonance, Series A, 117(1),
+94-97.
+}
 \section{Super class}{
 \code{\link[midi:CylinderRadialCompartment]{midi::CylinderRadialCompartment}} -> \code{SodermanCompartment}
 }

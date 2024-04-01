@@ -7,6 +7,10 @@
 A class to model restricted diffusion in a cylinder using the
 Neuman's model.
 }
+\references{
+Neuman, C. H. (1974). Spin echo of spins diffusing in a bounded
+medium. The Journal of Chemical Physics, 60(11), 4508-4511.
+}
 \section{Super class}{
 \code{\link[midi:CylinderRadialCompartment]{midi::CylinderRadialCompartment}} -> \code{NeumanCompartment}
 }

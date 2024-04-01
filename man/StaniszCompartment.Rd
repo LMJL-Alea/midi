@@ -7,6 +7,11 @@
 A class to model restricted diffusion in a cylinder using the
 Stanisz's model.
 }
+\references{
+Stanisz, G. J., Wright, G. A., Henkelman, R. M., & Szafer, A.
+(1997). An analytical model of restricted diffusion in bovine optic nerve.
+Magnetic Resonance in Medicine, 37(1), 103-111.
+}
 \section{Super class}{
 \code{\link[midi:CylinderRadialCompartment]{midi::CylinderRadialCompartment}} -> \code{StaniszCompartment}
 }

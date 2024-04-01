@@ -6,7 +6,7 @@
 \alias{midi-package}
 \title{midi: Microstructure Information from Diffusion Imaging}
 \description{
-A collection of diffusion models and tools to extract microstructure information from diffusion MRI data.
+This package implements a collection of models of restricted diffusion in biological tissues parametrized by the tissue geometry (axis, diameter, density, etc.). This is primarily used in the context of diffusion MRI to model the MR signal attenuation in the presence of diffusion gradients. The goal is to provide tools to simulate the MR signal attenuation predicted by these models under different experimental conditions. The package feeds a companion Shiny app available at \url{https://midi-pastrami.apps.math.cnrs.fr} that serves as a graphical interface to the models and tools provided by the package. Models currently available are the ones in Neuman (1974) \doi{10.1063/1.1680931}, Van Gelderen et al. (1994) \doi{10.1006/jmrb.1994.1038}, Stanisz et al. (1997) \doi{10.1002/mrm.1910370115}, Soderman & Jonsson (1995) \doi{10.1006/jmra.1995.0014} and Callaghan (1995) \doi{10.1006/jmra.1995.1055}.
 }
 \seealso{
 Useful links:

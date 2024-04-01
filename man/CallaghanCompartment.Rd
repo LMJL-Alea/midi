@@ -7,6 +7,11 @@
 A class to model restricted diffusion in a cylinder using the
 Callaghan's model.
 }
+\references{
+Callaghan, P. T. (1995). Pulsed-gradient spin-echo NMR for
+planar, cylindrical, and spherical pores under conditions of wall
+relaxation. Journal of magnetic resonance, Series A, 113(1), 53-59.
+}
 \section{Super class}{
 \code{\link[midi:CylinderRadialCompartment]{midi::CylinderRadialCompartment}} -> \code{CallaghanCompartment}
 }

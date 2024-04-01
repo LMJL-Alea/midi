@@ -89,6 +89,10 @@ CylinderRadialCompartment <- R6::R6Class(
 #' @description A class to model restricted diffusion in a cylinder using the
 #'   Soderman's model.
 #'
+#' @references Söderman, O., & Jönsson, B. (1995). Restricted diffusion in
+#'   cylindrical geometry. Journal of Magnetic Resonance, Series A, 117(1),
+#'   94-97.
+#'
 #' @export
 SodermanCompartment <- R6::R6Class(
   "SodermanCompartment",
@@ -109,6 +113,10 @@ SodermanCompartment <- R6::R6Class(
 #'
 #' @description A class to model restricted diffusion in a cylinder using the
 #'   Stanisz's model.
+#'
+#' @references Stanisz, G. J., Wright, G. A., Henkelman, R. M., & Szafer, A.
+#'   (1997). An analytical model of restricted diffusion in bovine optic nerve.
+#'   Magnetic Resonance in Medicine, 37(1), 103-111.
 #'
 #' @export
 StaniszCompartment <- R6::R6Class(
@@ -135,6 +143,9 @@ StaniszCompartment <- R6::R6Class(
 #' @description A class to model restricted diffusion in a cylinder using the
 #'   Neuman's model.
 #'
+#' @references Neuman, C. H. (1974). Spin echo of spins diffusing in a bounded
+#'   medium. The Journal of Chemical Physics, 60(11), 4508-4511.
+#'
 #' @export
 NeumanCompartment <- R6::R6Class(
   "NeumanCompartment",
@@ -160,6 +171,10 @@ NeumanCompartment <- R6::R6Class(
 #'
 #' @description A class to model restricted diffusion in a cylinder using the
 #'   Callaghan's model.
+#'
+#' @references Callaghan, P. T. (1995). Pulsed-gradient spin-echo NMR for
+#'   planar, cylindrical, and spherical pores under conditions of wall
+#'   relaxation. Journal of magnetic resonance, Series A, 113(1), 53-59.
 #'
 #' @export
 CallaghanCompartment <- R6::R6Class(
@@ -189,6 +204,11 @@ CallaghanCompartment <- R6::R6Class(
 #'
 #' @description A class to model restricted diffusion in a cylinder using the
 #'   Van Gelderen's model.
+#'
+#' @references Vangelderen, P., DesPres, D., Vanzijl, P. C. M., & Moonen, C. T.
+#'   W. (1994). Evaluation of restricted diffusion in cylinders. Phosphocreatine
+#'   in rabbit leg muscle. Journal of Magnetic Resonance, Series B, 103(3),
+#'   255-260.
 #'
 #' @export
 VanGelderenCompartment <- R6::R6Class(
