@@ -73,7 +73,8 @@
 <span>  n_cylinders <span class="op">=</span> <span class="fl">1L</span>,</span>
 <span>  axis_concentration <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  radius_sd <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  radial_model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"soderman"</span>, <span class="st">"callaghan"</span>, <span class="st">"stanisz"</span>, <span class="st">"neuman"</span>, <span class="st">"vangelderen"</span><span class="op">)</span></span>
+<span>  radial_model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"soderman"</span>, <span class="st">"callaghan"</span>, <span class="st">"stanisz"</span>, <span class="st">"neuman"</span>, <span class="st">"vangelderen"</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">1234</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -133,6 +134,11 @@ radius of the cylinder population in meters. Defaults to <code>0</code>.</p></dd
 <dd><p>A character string specifying the radial model to
 use. Choices are <code>"soderman"</code>, <code>"callaghan"</code>, <code>"stanisz"</code>, <code>"neuman"</code>,
 and <code>"vangelderen"</code>. Defaults to <code>"soderman"</code>.</p></dd>
+
+
+<dt><code>seed</code></dt>
+<dd><p>An integer value specifying the seed for the random number
+generator. Defaults to <code>1234</code>.</p></dd>
 
 
 </dl><p></p></div>
