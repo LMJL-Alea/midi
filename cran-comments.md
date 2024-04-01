@@ -1,3 +1,15 @@
+## Resubmission
+
+This is a resubmission. In this version I have:
+
+* Expanded the `Description` field in the `DESCRIPTION` file to better describe 
+the package and its purpose;
+* Added references both to the `DESCRIPTION` file and the documentation of the
+classes;
+* Replaced the use of `dontrun{}` in the examples with `donttest{}` to avoid
+running the examples during the CRAN checks;
+* Added a `seed` option where necessary to avoid fixing the seed in the code.
+
 ## Test environments
 * local macOS R installation, R 4.3.3
 * continuous integration via GH actions:
