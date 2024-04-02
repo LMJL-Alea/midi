@@ -4,17 +4,25 @@
 \alias{simulate_bundle}
 \title{Generates a cross section of a cylinder bundle}
 \usage{
-simulate_bundle(density = 0.9, voxel_size = 1e-05, max_iter = 1000L)
+simulate_bundle(
+  density = 0.5,
+  voxel_size = 10,
+  rel_tol = 0.001,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{density}{A numeric value between 0 and 1 specifying the density of the
-cylinders in the voxel. Defaults to \code{0.9}.}
+cylinders in the voxel. Defaults to \code{0.5}.}
 
-\item{voxel_size}{A numeric value specifying the size of the voxel in meters.
-Defaults to \code{1e-5}.}
+\item{voxel_size}{A numeric value specifying the size of the voxel in micro-
+meters. Defaults to \code{10}.}
 
-\item{max_iter}{An integer value specifying the maximum number of iterations
-for the simulation. Defaults to \code{1000L}.}
+\item{rel_tol}{A numeric value specifying the relative tolerance to reach the
+target volume defined as \code{density * voxel_size^2}. Defaults to \code{1e-3}.}
+
+\item{verbose}{A logical value specifying whether to print messages. Defaults
+to \code{FALSE}.}
 }
 \value{
 A list with the following components:
@@ -23,9 +31,9 @@ A list with the following components:
 \itemize{
 \item \code{x}: The x-coordinates of the centers of the cylinders;
 \item \code{y}: The y-coordinates of the centers of the cylinders;
-\item \code{r}: The radii of the cylinders.
+\item \code{r}: The radii of the cylinders in micrometers.
 }
-\item \code{voxel_size}: The size of the voxel in meters.
+\item \code{voxel_size}: The size of the voxel in micrometers
 }
 }
 \description{
@@ -38,9 +46,11 @@ retrieved by histology in the genu of the corpus callosum (Aboitiz et al.,
 size.
 }
 \examples{
-density <- 0.9
-voxel_size <- 0.000005 # 5 micrometers
-out <- simulate_bundle(density, voxel_size)
+density <- 0.5
+voxel_size <- 5 # micrometers
+withr::with_seed(1234, {
+  out <- simulate_bundle(density, voxel_size)
+})
 
 # Actual density in the simulated substrate
 sum(out$sections[, "r"]^2 * pi) / voxel_size^2

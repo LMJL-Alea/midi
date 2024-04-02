@@ -13,76 +13,85 @@
 #'   143-153.
 #'
 #' @param density A numeric value between 0 and 1 specifying the density of the
-#'   cylinders in the voxel. Defaults to `0.9`.
-#' @param voxel_size A numeric value specifying the size of the voxel in meters.
-#'   Defaults to `1e-5`.
-#' @param max_iter An integer value specifying the maximum number of iterations
-#'   for the simulation. Defaults to `1000L`.
+#'   cylinders in the voxel. Defaults to `0.5`.
+#' @param voxel_size A numeric value specifying the size of the voxel in micro-
+#'  meters. Defaults to `10`.
+#' @param rel_tol A numeric value specifying the relative tolerance to reach the
+#'   target volume defined as `density * voxel_size^2`. Defaults to `1e-3`.
+#' @param verbose A logical value specifying whether to print messages. Defaults
+#'   to `FALSE`.
 #'
 #' @return A list with the following components:
 #' - `sections`: A numeric matrix with 3 columns:
 #'   - `x`: The x-coordinates of the centers of the cylinders;
 #'   - `y`: The y-coordinates of the centers of the cylinders;
-#'   - `r`: The radii of the cylinders.
-#' - `voxel_size`: The size of the voxel in meters.
+#'   - `r`: The radii of the cylinders in micrometers.
+#' - `voxel_size`: The size of the voxel in micrometers
 #' @export
 #'
 #' @examples
-#' density <- 0.9
-#' voxel_size <- 0.000005 # 5 micrometers
-#' out <- simulate_bundle(density, voxel_size)
+#' density <- 0.5
+#' voxel_size <- 5 # micrometers
+#' withr::with_seed(1234, {
+#'   out <- simulate_bundle(density, voxel_size)
+#' })
 #'
 #' # Actual density in the simulated substrate
 #' sum(out$sections[, "r"]^2 * pi) / voxel_size^2
-simulate_bundle <- function(density = 0.9, voxel_size = 1e-5, max_iter = 1000L) {
+simulate_bundle <- function(density = 0.5,
+                            voxel_size = 10,
+                            rel_tol = 1e-3,
+                            verbose = FALSE) {
+  target <- density * voxel_size^2
   kappa <- 5.3316
-  scale <- 1.0242e-7
-  rad_mean <- kappa * scale
-  mean_cyl_surf <- pi * rad_mean^2
-  n_cylinders <- round(density * voxel_size^2 / mean_cyl_surf)
-  radii <- sort(
-    stats::rgamma(n_cylinders, shape = kappa, scale = scale),
-    decreasing = TRUE
-  )
+  scale <- 1.0242e-1
   tot_surf <- 0
   grd <- seq(0, 2 * pi, length.out = 100)
   unit_circle_sample <- cbind(cos(grd), sin(grd))
-  x_centers <- rep(NA, n_cylinders)
-  y_centers <- rep(NA, n_cylinders)
-  for (i in 1:n_cylinders) {
-    ok <- FALSE
-    r <- radii[i]
-    iter <- 0
-    while (!ok && iter < max_iter) {
-      x <- stats::runif(1, min = -voxel_size / 2, max = voxel_size / 2)
-      y <- stats::runif(1, min = -voxel_size / 2, max = voxel_size / 2)
-      points <- cbind(
-        x + r * unit_circle_sample[, 1],
-        y + r * unit_circle_sample[, 2]
-      )
-      ok <- all(points <= voxel_size / 2) && all(points >= -voxel_size / 2)
-      if (i > 1) {
-        for (j in 1:(i - 1)) {
-          if (any((points[, 1] - x_centers[j])^2 +
-                  (points[, 2] - y_centers[j])^2 < radii[j]^2)) {
-            ok <- FALSE
-            break
-          }
+  x_centers <- numeric()
+  y_centers <- numeric()
+  radii <- numeric()
+  while (abs(tot_surf - target) > rel_tol * target) {
+    x <- stats::runif(1, min = -voxel_size / 2, max = voxel_size / 2)
+    y <- stats::runif(1, min = -voxel_size / 2, max = voxel_size / 2)
+    feasible <- TRUE
+    if (length(radii) >= 1) {
+      for (j in 1:length(radii)) {
+        if ((x - x_centers[j])^2 + (y - y_centers[j])^2 < radii[j]^2) {
+          feasible <- FALSE
+          break
         }
       }
-      iter <- iter + 1
     }
-    if (!ok) radii[i] <- 0
-    tot_surf <- tot_surf + pi * radii[i]^2
-    if (tot_surf > density * voxel_size^2) {
-      break
+    if (!feasible) next
+    r <- stats::rgamma(1, shape = kappa, scale = scale)
+    points <- cbind(
+      x + r * unit_circle_sample[, 1],
+      y + r * unit_circle_sample[, 2]
+    )
+    feasible <- all(points <= voxel_size / 2) && all(points >= -voxel_size / 2)
+    if (!feasible) next
+    if (length(radii) >= 1) {
+      for (j in 1:length(radii)) {
+        if (any((points[, 1] - x_centers[j])^2 +
+                (points[, 2] - y_centers[j])^2 < radii[j]^2)) {
+          feasible <- FALSE
+          break
+        }
+      }
     }
-    x_centers[i] <- x
-    y_centers[i] <- y
+    if (!feasible) next
+    if (tot_surf + pi * r^2 > target)
+      next
+    tot_surf <- tot_surf + pi * r^2
+    if (verbose)
+      cli::cli_alert_info("Total surface area of {round(tot_surf, 3)} / {target}")
+    x_centers <- c(x_centers, x)
+    y_centers <- c(y_centers, y)
+    radii <- c(radii, r)
   }
 
   sections <- cbind(x = x_centers, y = y_centers, r = radii)
-  sections <- stats::na.omit(sections)
   out <- list(sections = sections, voxel_size = voxel_size)
   class(out) <- c("bundle", class(out))
   out
@@ -108,9 +117,11 @@ simulate_bundle <- function(density = 0.9, voxel_size = 1e-5, max_iter = 1000L) 
 #' @importFrom ggplot2 autoplot
 #' @importFrom rlang .data
 #' @examples
-#' density <- 0.9
-#' voxel_size <- 0.000005 # 5 micrometers
-#' out <- simulate_bundle(density, voxel_size)
+#' density <- 0.5
+#' voxel_size <- 5 # micrometers
+#' withr::with_seed(1234, {
+#'   out <- simulate_bundle(density, voxel_size)
+#' })
 #' ggplot2::autoplot(out)
 autoplot.bundle <- function(object, grid_size = 100L, ...) {
   grd <- seq(0, 2 * pi, length.out = grid_size)
@@ -149,9 +160,11 @@ autoplot.bundle <- function(object, grid_size = 100L, ...) {
 #'
 #' @importFrom graphics plot
 #' @examples
-#' density <- 0.9
-#' voxel_size <- 0.000005 # 5 micrometers
-#' out <- simulate_bundle(density, voxel_size)
+#' density <- 0.5
+#' voxel_size <- 5 # micrometers
+#' withr::with_seed(1234, {
+#'   out <- simulate_bundle(density, voxel_size)
+#' })
 #' plot(out)
 plot.bundle <- function(x, grid_size = 100L, ...) {
   print(autoplot(x, grid_size, ...))
@@ -174,9 +187,11 @@ plot.bundle <- function(x, grid_size = 100L, ...) {
 #' @export
 #'
 #' @examples
-#' density <- 0.9
-#' voxel_size <- 0.000005 # 5 micrometers
-#' out <- simulate_bundle(density, voxel_size)
+#' density <- 0.5
+#' voxel_size <- 5 # micrometers
+#' withr::with_seed(1234, {
+#'   out <- simulate_bundle(density, voxel_size)
+#' })
 #' plot3d(out)
 plot3d <- function(b, show_linear_mesh = FALSE) {
   if (!inherits(b, "bundle"))

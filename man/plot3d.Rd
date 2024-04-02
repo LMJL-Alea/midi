@@ -24,8 +24,10 @@ Plots a 3D representation of a cylinder bundle from an object of class
 \href{https://plotly.com/r/}{\strong{plotly}}.
 }
 \examples{
-density <- 0.9
-voxel_size <- 0.000005 # 5 micrometers
-out <- simulate_bundle(density, voxel_size)
+density <- 0.5
+voxel_size <- 5 # micrometers
+withr::with_seed(1234, {
+  out <- simulate_bundle(density, voxel_size)
+})
 plot3d(out)
 }
