@@ -67,6 +67,13 @@ can be directly accessed at the following URL:
 
 ## Installation
 
+You can install the released version of midi from
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("midi")
+```
+
 You can install the development version of midi from
 [GitHub](https://github.com/) with:
 
@@ -113,8 +120,8 @@ cylinderBundleComp$get_signal(
 We can also simulate and visualize cylinder bundles:
 
 ``` r
-density <- 0.9
-voxel_size <- 0.000010 # 10 micrometers
+density <- 0.7
+voxel_size <- 5 # micrometers
 out <- simulate_bundle(density, voxel_size)
 plot(out)
 ```
