@@ -22,19 +22,22 @@
     <loc>https://lmjl-alea.github.io/midi/reference/CallaghanCompartment.html</loc>
   </url>
   <url>
+    <loc>https://lmjl-alea.github.io/midi/reference/CircularlyShapedCompartment.html</loc>
+  </url>
+  <url>
     <loc>https://lmjl-alea.github.io/midi/reference/CylinderBundleCompartment.html</loc>
   </url>
   <url>
     <loc>https://lmjl-alea.github.io/midi/reference/CylinderCompartment.html</loc>
   </url>
   <url>
-    <loc>https://lmjl-alea.github.io/midi/reference/CylinderRadialCompartment.html</loc>
-  </url>
-  <url>
     <loc>https://lmjl-alea.github.io/midi/reference/NeumanCompartment.html</loc>
   </url>
   <url>
     <loc>https://lmjl-alea.github.io/midi/reference/SodermanCompartment.html</loc>
+  </url>
+  <url>
+    <loc>https://lmjl-alea.github.io/midi/reference/SphereCompartment.html</loc>
   </url>
   <url>
     <loc>https://lmjl-alea.github.io/midi/reference/StaniszCompartment.html</loc>
