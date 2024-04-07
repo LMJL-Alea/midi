@@ -1,18 +1,18 @@
-#' Cylinder radial compartment class
+#' Circularly-shaped compartment class
 #'
-#' @description A class to model restricted diffusion in a cylinder in the plane
-#'   perpendicular to the cylinder axis.
-CylinderRadialCompartment <- R6::R6Class(
-  "CylinderRadialCompartment",
+#' @description A class to model restricted diffusion in a bounded medium
+#'   described by a circular shape with a given radius.
+CircularlyShapedCompartment <- R6::R6Class(
+  "CircularlyShapedCompartment",
   public = list(
-    #' @description Instantiates a new cylinder radial compartment.
+    #' @description Instantiates a new circular compartment.
     #'
     #' @param radius A numeric value specifying the radius of the cylinder in
     #'   meters.
     #' @param diffusivity A numeric value specifying the diffusivity within the
     #'   cylinder in m\eqn{^2}.s\eqn{^{-1}}.
     #'
-    #' @return An instance of the [`CylinderRadialCompartment`] class.
+    #' @return An instance of the [`CircularlyShapedCompartment`] class.
     initialize = function(radius, diffusivity) {
       private$radius <- radius
       private$diffusivity <- diffusivity
@@ -96,7 +96,7 @@ CylinderRadialCompartment <- R6::R6Class(
 #' @export
 SodermanCompartment <- R6::R6Class(
   "SodermanCompartment",
-  inherit = CylinderRadialCompartment,
+  inherit = CircularlyShapedCompartment,
   private = list(
     compute_signal = function(small_delta, big_delta, G,
                           echo_time = NULL,
@@ -121,7 +121,7 @@ SodermanCompartment <- R6::R6Class(
 #' @export
 StaniszCompartment <- R6::R6Class(
   "StaniszCompartment",
-  inherit = CylinderRadialCompartment,
+  inherit = CircularlyShapedCompartment,
   private = list(
     compute_signal = function(small_delta, big_delta, G,
                           echo_time = NULL,
@@ -149,7 +149,7 @@ StaniszCompartment <- R6::R6Class(
 #' @export
 NeumanCompartment <- R6::R6Class(
   "NeumanCompartment",
-  inherit = CylinderRadialCompartment,
+  inherit = CircularlyShapedCompartment,
   private = list(
     compute_signal = function(small_delta, big_delta, G,
                           echo_time = NULL,
@@ -179,7 +179,7 @@ NeumanCompartment <- R6::R6Class(
 #' @export
 CallaghanCompartment <- R6::R6Class(
   "CallaghanCompartment",
-  inherit = CylinderRadialCompartment,
+  inherit = CircularlyShapedCompartment,
   private = list(
     compute_signal = function(small_delta, big_delta, G,
                           echo_time = NULL,
@@ -213,7 +213,7 @@ CallaghanCompartment <- R6::R6Class(
 #' @export
 VanGelderenCompartment <- R6::R6Class(
   "VanGelderenCompartment",
-  inherit = CylinderRadialCompartment,
+  inherit = CircularlyShapedCompartment,
   private = list(
     compute_signal = function(small_delta, big_delta, G,
                           echo_time = NULL,

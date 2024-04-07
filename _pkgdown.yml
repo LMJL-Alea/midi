@@ -10,16 +10,17 @@ reference:
     - plot.bundle
     - plot3d
   - title: Bundle signal prediction
-  - subtitle: Models for restricted diffusion in a cylinder
+  - subtitle: Models for restricted diffusion in circularly-shaped media
   - contents:
+    - CircularlyShapedCompartment
     - CallaghanCompartment
     - NeumanCompartment
     - SodermanCompartment
     - StaniszCompartment
     - VanGelderenCompartment
-  - subtitle: Classes for diffusion in cylinders
+  - subtitle: Classes for diffusion in cylinders and spheres
   - contents:
-    - CylinderRadialCompartment
+    - SphereCompartment
     - CylinderCompartment
     - CylinderBundleCompartment
   - title: Utility functions

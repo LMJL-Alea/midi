@@ -9,5 +9,5 @@ test_that("`NeumanCompartment` class works", {
     G = 0.040,
     echo_time = 0.080
   )
-  expect_true(inherits(comp, "CylinderRadialCompartment"))
+  expect_true(inherits(comp, "CircularlyShapedCompartment"))
 })

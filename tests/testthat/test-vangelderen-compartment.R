@@ -8,5 +8,5 @@ test_that("`VanGelderenCompartment` class works", {
     big_delta = 0.03,
     G = 0.040
   )
-  expect_true(inherits(comp, "CylinderRadialCompartment"))
+  expect_true(inherits(comp, "CircularlyShapedCompartment"))
 })
