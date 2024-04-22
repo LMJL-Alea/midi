@@ -12,7 +12,6 @@ reference:
   - title: MR signal prediction
   - subtitle: Models for restricted diffusion in circularly-shaped media
   - contents:
-    - CircularlyShapedCompartment
     - CallaghanCompartment
     - NeumanCompartment
     - SodermanCompartment

@@ -7,6 +7,7 @@
 A class to model restricted diffusion in a bounded medium
 described by a circular shape with a given radius.
 }
+\keyword{internal}
 \section{Super class}{
 \code{\link[midi:BaseCompartment]{midi::BaseCompartment}} -> \code{CircularlyShapedCompartment}
 }

@@ -59,6 +59,7 @@ freeComp$get_parameter_names()
 freeComp <- FreeCompartment$new()
 freeComp$get_parameter_values()
 }
+\keyword{internal}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

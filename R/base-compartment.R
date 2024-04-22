@@ -1,6 +1,8 @@
 #' Base compartment class
 #'
 #' @description The base class for compartment models.
+#'
+#' @keywords internal
 BaseCompartment <- R6::R6Class(
   "BaseCompartment",
   public = list(

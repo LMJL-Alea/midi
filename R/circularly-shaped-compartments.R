@@ -2,6 +2,8 @@
 #'
 #' @description A class to model restricted diffusion in a bounded medium
 #'   described by a circular shape with a given radius.
+#'
+#' @keywords internal
 CircularlyShapedCompartment <- R6::R6Class(
   "CircularlyShapedCompartment",
   inherit = BaseCompartment,
