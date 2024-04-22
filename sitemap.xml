@@ -19,6 +19,9 @@
     <loc>https://lmjl-alea.github.io/midi/news/index.html</loc>
   </url>
   <url>
+    <loc>https://lmjl-alea.github.io/midi/reference/BaseCompartment.html</loc>
+  </url>
+  <url>
     <loc>https://lmjl-alea.github.io/midi/reference/CallaghanCompartment.html</loc>
   </url>
   <url>
@@ -29,6 +32,9 @@
   </url>
   <url>
     <loc>https://lmjl-alea.github.io/midi/reference/CylinderCompartment.html</loc>
+  </url>
+  <url>
+    <loc>https://lmjl-alea.github.io/midi/reference/FreeCompartment.html</loc>
   </url>
   <url>
     <loc>https://lmjl-alea.github.io/midi/reference/NeumanCompartment.html</loc>
