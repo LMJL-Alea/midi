@@ -7,151 +7,48 @@
 A class to model restricted diffusion in a bounded medium
 described by a circular shape with a given radius.
 }
-\examples{
-
-## ------------------------------------------------
-## Method `CircularlyShapedCompartment$get_signal`
-## ------------------------------------------------
-
-sodermanComp <- SodermanCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-sodermanComp$get_signal(0.03, 0.03, 0.040)
-
-staniszComp <- StaniszCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-staniszComp$get_signal(0.03, 0.03, 0.040)
-
-neumanComp <- NeumanCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-neumanComp$get_signal(0.03, 0.03, 0.040, echo_time = 0.040)
-
-callaghanComp <- CallaghanCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-callaghanComp$get_signal(0.03, 0.03, 0.040)
-
-vanGelderenComp <- VanGelderenCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-vanGelderenComp$get_signal(0.03, 0.03, 0.040)
+\section{Super class}{
+\code{\link[midi:BaseCompartment]{midi::BaseCompartment}} -> \code{CircularlyShapedCompartment}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-CircularlyShapedCompartment-new}{\code{CircularlyShapedCompartment$new()}}
-\item \href{#method-CircularlyShapedCompartment-get_signal}{\code{CircularlyShapedCompartment$get_signal()}}
 \item \href{#method-CircularlyShapedCompartment-clone}{\code{CircularlyShapedCompartment$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameter_names"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameter_names'><code>midi::BaseCompartment$get_parameter_names()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameter_values"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameter_values'><code>midi::BaseCompartment$get_parameter_values()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_signal"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_signal'><code>midi::BaseCompartment$get_signal()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CircularlyShapedCompartment-new"></a>}}
 \if{latex}{\out{\hypertarget{method-CircularlyShapedCompartment-new}{}}}
 \subsection{Method \code{new()}}{
 Instantiates a new circular compartment.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CircularlyShapedCompartment$new(radius, diffusivity)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CircularlyShapedCompartment$new(radius = NULL, diffusivity = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{radius}}{A numeric value specifying the radius of the cylinder in
-meters.}
+\item{\code{radius}}{A numeric value specifying the radius of the sphere in
+\eqn{\mu}m.}
 
 \item{\code{diffusivity}}{A numeric value specifying the diffusivity within the
-cylinder in m\eqn{^2}.s\eqn{^{-1}}.}
+sphere in \eqn{\mu}m\eqn{^2}.ms\eqn{^{-1}}.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 An instance of the \code{\link{CircularlyShapedCompartment}} class.
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CircularlyShapedCompartment-get_signal"></a>}}
-\if{latex}{\out{\hypertarget{method-CircularlyShapedCompartment-get_signal}{}}}
-\subsection{Method \code{get_signal()}}{
-Computes the signal attenuation predicted by the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CircularlyShapedCompartment$get_signal(
-  small_delta,
-  big_delta,
-  G,
-  echo_time = NULL,
-  n_max = 20L,
-  m_max = 50L
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{small_delta}}{A numeric value specifying the duration of the
-gradient pulse in seconds.}
-
-\item{\code{big_delta}}{A numeric value specifying the duration between the
-gradient pulses in seconds.}
-
-\item{\code{G}}{A numeric value specifying the strength of the gradient in
-T.m\eqn{^{-1}}.}
-
-\item{\code{echo_time}}{A numeric value specifying the echo time in seconds.}
-
-\item{\code{n_max}}{An integer value specifying the maximum order of the Bessel
-function. Defaults to \code{20L}.}
-
-\item{\code{m_max}}{An integer value specifying the maximum number of extrema
-for the Bessel function. Defaults to \code{50L}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A numeric value storing the predicted signal attenuation.
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{sodermanComp <- SodermanCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-sodermanComp$get_signal(0.03, 0.03, 0.040)
-
-staniszComp <- StaniszCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-staniszComp$get_signal(0.03, 0.03, 0.040)
-
-neumanComp <- NeumanCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-neumanComp$get_signal(0.03, 0.03, 0.040, echo_time = 0.040)
-
-callaghanComp <- CallaghanCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-callaghanComp$get_signal(0.03, 0.03, 0.040)
-
-vanGelderenComp <- VanGelderenCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-vanGelderenComp$get_signal(0.03, 0.03, 0.040)
-}
-\if{html}{\out{</div>}}
-
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CircularlyShapedCompartment-clone"></a>}}

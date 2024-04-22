@@ -4,83 +4,41 @@
 #'   described by a circular shape with a given radius.
 CircularlyShapedCompartment <- R6::R6Class(
   "CircularlyShapedCompartment",
+  inherit = BaseCompartment,
   public = list(
     #' @description Instantiates a new circular compartment.
     #'
-    #' @param radius A numeric value specifying the radius of the cylinder in
-    #'   meters.
+    #' @param radius A numeric value specifying the radius of the sphere in
+    #'   \eqn{\mu}m.
     #' @param diffusivity A numeric value specifying the diffusivity within the
-    #'   cylinder in m\eqn{^2}.s\eqn{^{-1}}.
+    #'   sphere in \eqn{\mu}m\eqn{^2}.ms\eqn{^{-1}}.
     #'
     #' @return An instance of the [`CircularlyShapedCompartment`] class.
-    initialize = function(radius, diffusivity) {
-      private$radius <- radius
-      private$diffusivity <- diffusivity
-    },
+    initialize = function(radius = NULL, diffusivity = NULL) {
+      # Set the radius
+      if (is.null(radius))
+        private$radius <- default_sphere_radius()
+      else {
+        if (radius <= 0)
+          cli::cli_abort("The sphere radius should be strictly positive.")
+        private$radius <- radius
+      }
 
-    #' @description Computes the signal attenuation predicted by the model.
-    #'
-    #' @param small_delta A numeric value specifying the duration of the
-    #'  gradient pulse in seconds.
-    #' @param big_delta A numeric value specifying the duration between the
-    #'  gradient pulses in seconds.
-    #' @param G A numeric value specifying the strength of the gradient in
-    #'  T.m\eqn{^{-1}}.
-    #' @param echo_time A numeric value specifying the echo time in seconds.
-    #' @param n_max An integer value specifying the maximum order of the Bessel
-    #'  function. Defaults to `20L`.
-    #' @param m_max An integer value specifying the maximum number of extrema
-    #' for the Bessel function. Defaults to `50L`.
-    #'
-    #' @return A numeric value storing the predicted signal attenuation.
-    #'
-    #' @examples
-    #' sodermanComp <- SodermanCompartment$new(
-    #'   radius = 1e-6,
-    #'   diffusivity = 2.0e-9
-    #' )
-    #' sodermanComp$get_signal(0.03, 0.03, 0.040)
-    #'
-    #' staniszComp <- StaniszCompartment$new(
-    #'   radius = 1e-6,
-    #'   diffusivity = 2.0e-9
-    #' )
-    #' staniszComp$get_signal(0.03, 0.03, 0.040)
-    #'
-    #' neumanComp <- NeumanCompartment$new(
-    #'   radius = 1e-6,
-    #'   diffusivity = 2.0e-9
-    #' )
-    #' neumanComp$get_signal(0.03, 0.03, 0.040, echo_time = 0.040)
-    #'
-    #' callaghanComp <- CallaghanCompartment$new(
-    #'   radius = 1e-6,
-    #'   diffusivity = 2.0e-9
-    #' )
-    #' callaghanComp$get_signal(0.03, 0.03, 0.040)
-    #'
-    #' vanGelderenComp <- VanGelderenCompartment$new(
-    #'   radius = 1e-6,
-    #'   diffusivity = 2.0e-9
-    #' )
-    #' vanGelderenComp$get_signal(0.03, 0.03, 0.040)
-    get_signal = function(small_delta, big_delta, G,
-                          echo_time = NULL,
-                          n_max = 20L,
-                          m_max = 50L) {
-      private$compute_signal(
-        small_delta = small_delta,
-        big_delta = big_delta,
-        G = G,
-        echo_time = echo_time,
-        n_max = n_max,
-        m_max = m_max
-      )
+      # Set the diffusivity
+      if (is.null(diffusivity))
+        private$diffusivity <- default_free_diffusivity()
+      else {
+        if (diffusivity <= 0)
+          cli::cli_abort("The sphere diffusivity should be strictly positive.")
+        private$diffusivity <- diffusivity
+      }
     }
   ),
   private = list(
     radius = NULL,
-    diffusivity = NULL
+    diffusivity = NULL,
+    parameter_names = function() c("Radius", "Diffusivity"),
+    parameter_values = function()  c(private$radius, private$diffusivity)
   )
 )
 

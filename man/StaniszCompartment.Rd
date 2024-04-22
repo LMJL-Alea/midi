@@ -12,8 +12,8 @@ Stanisz, G. J., Wright, G. A., Henkelman, R. M., & Szafer, A.
 (1997). An analytical model of restricted diffusion in bovine optic nerve.
 Magnetic Resonance in Medicine, 37(1), 103-111.
 }
-\section{Super class}{
-\code{\link[midi:CircularlyShapedCompartment]{midi::CircularlyShapedCompartment}} -> \code{StaniszCompartment}
+\section{Super classes}{
+\code{\link[midi:BaseCompartment]{midi::BaseCompartment}} -> \code{\link[midi:CircularlyShapedCompartment]{midi::CircularlyShapedCompartment}} -> \code{StaniszCompartment}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -24,7 +24,9 @@ Magnetic Resonance in Medicine, 37(1), 103-111.
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="midi" data-topic="CircularlyShapedCompartment" data-id="get_signal"><a href='../../midi/html/CircularlyShapedCompartment.html#method-CircularlyShapedCompartment-get_signal'><code>midi::CircularlyShapedCompartment$get_signal()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameter_names"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameter_names'><code>midi::BaseCompartment$get_parameter_names()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameter_values"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameter_values'><code>midi::BaseCompartment$get_parameter_values()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_signal"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_signal'><code>midi::BaseCompartment$get_signal()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="midi" data-topic="CircularlyShapedCompartment" data-id="initialize"><a href='../../midi/html/CircularlyShapedCompartment.html#method-CircularlyShapedCompartment-initialize'><code>midi::CircularlyShapedCompartment$initialize()</code></a></span></li>
 </ul>
 </details>

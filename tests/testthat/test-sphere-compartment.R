@@ -1,13 +1,10 @@
 test_that("`SphereCompartment` class works", {
-  sphereComp <- SphereCompartment$new(
-    radius = 1e-6,
-    diffusivity = 2.0e-9,
-    model = "soderman"
-  )
+  sphereComp <- SphereCompartment$new()
   out <- sphereComp$get_signal(
-    small_delta = 0.03,
-    big_delta = 0.03,
-    G = 0.040
+    small_delta = 30,
+    big_delta = 30,
+    G = 0.040e-3
   )
   expect_true(inherits(sphereComp, "SphereCompartment"))
+  expect_equal(round(out, 5), 0.12045)
 })
