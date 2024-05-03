@@ -89,33 +89,45 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>We can instantiate a cylinder bundle compartment as follows:</p>
+<p>We can instantiate a cylinder compartment as follows:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lmjl-alea/midi" class="external-link">midi</a></span><span class="op">)</span></span>
-<span><span class="va">cylinderBundleComp</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/CylinderBundleCompartment.html">CylinderBundleCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span><span class="va">restrComp</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/VanGelderenCompartment.html">VanGelderenCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  radius <span class="op">=</span> <span class="fl">0.5</span>, <span class="co"># um</span></span>
+<span>  diffusivity <span class="op">=</span> <span class="fl">3</span> <span class="co"># um^2/ms</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">cylComp</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/CylinderCompartment.html">CylinderCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
 <span>  axis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  radius <span class="op">=</span> <span class="fl">1e-5</span>,</span>
-<span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span>,</span>
-<span>  cylinder_density <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  radial_model <span class="op">=</span> <span class="st">"soderman"</span></span>
+<span>  restricted_compartment <span class="op">=</span> <span class="va">restrComp</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Note that the instantiation of the compartment requires the specification of the cylinder axis, radius, diffusivity, cylinder density, and radial model, which are only the parameters related to the cylinder bundle geometry.</p>
-<p>The parameters related to the experimental conditions are specified when calling the <code>get_signal</code> method which computes the signal attenuation for the compartment. In this example, we consider the following experimental conditions:</p>
+<p>Note that the instantiation of the compartment requires the specification of the cylinder axis, radius and diffusivity, which are only the parameters related to the cylinder geometry. The radius and diffusivity are in fact the parameters of the restricted compartment, which is first instantiated and then passed to the cylinder compartment. Several other restricted compartments are available in the package.</p>
+<p>Once instantiated, the compartment object can be used to access the list of its parameters:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cylinderBundleComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span></span>
-<span>  small_delta <span class="op">=</span> <span class="fl">0.03</span>,</span>
-<span>  big_delta <span class="op">=</span> <span class="fl">0.03</span>,</span>
-<span>  G <span class="op">=</span> <span class="fl">0.040</span>,</span>
+<code class="sourceCode R"><span><span class="va">cylComp</span><span class="op">$</span><span class="fu">get_parameters</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $CylinderAxis</span></span>
+<span><span class="co">#&gt; [1] 0 0 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CylinderRadius</span></span>
+<span><span class="co">#&gt; [1] 0.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CylinderDiffusivity</span></span>
+<span><span class="co">#&gt; [1] 3</span></span></code></pre></div>
+<p>The parameters related to the experimental conditions are specified when calling the <code>get_signal</code> method which computes the signal attenuation for the compartment. In this example, we consider the following experimental conditions:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cylComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span></span>
+<span>  small_delta <span class="op">=</span> <span class="fl">30</span>, <span class="co"># ms</span></span>
+<span>  big_delta <span class="op">=</span> <span class="fl">30</span>, <span class="co"># ms</span></span>
+<span>  G <span class="op">=</span> <span class="fl">0.040</span>, <span class="co"># uT/um</span></span>
 <span>  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.01616863</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.002055938</span></span></code></pre></div>
 <p>We can also simulate and visualize cylinder bundles:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">density</span> <span class="op">&lt;-</span> <span class="fl">0.7</span></span>
-<span><span class="va">voxel_size</span> <span class="op">&lt;-</span> <span class="fl">5</span> <span class="co"># micrometers</span></span>
+<span><span class="va">voxel_size</span> <span class="op">&lt;-</span> <span class="fl">5</span> <span class="co"># um</span></span>
 <span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/simulate_bundle.html">simulate_bundle</a></span><span class="op">(</span><span class="va">density</span>, <span class="va">voxel_size</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
 <p>A 3D visualization of the cylinder bundle powered by the <a href="https://plotly.com/r/" class="external-link"><strong>plotly</strong></a> package can be obtained by calling <code><a href="reference/plot3d.html">plot3d()</a></code>. See the documentation online at <a href="https://lmjl-alea.github.io/midi/reference/plot3d.html" class="uri">https://lmjl-alea.github.io/midi/reference/plot3d.html</a> for more details.</p>
 </div>
 </div>

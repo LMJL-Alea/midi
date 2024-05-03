@@ -57,23 +57,27 @@
 
 
     <div class="section level2">
+    <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
+    <p><code><a href="BaseCompartment.html">midi::BaseCompartment</a></code> -&gt; <code><a href="CircularlyShapedCompartment.html">midi::CircularlyShapedCompartment</a></code> -&gt; <code>CylinderCompartment</code></p>
+    </div>
+    <div class="section level2">
     <h2 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a></h2>
     
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
 <ul><li><p><a href="#method-CylinderCompartment-new"><code>CylinderCompartment$new()</code></a></p></li>
-<li><p><a href="#method-CylinderCompartment-get_signal"><code>CylinderCompartment$get_signal()</code></a></p></li>
 <li><p><a href="#method-CylinderCompartment-clone"><code>CylinderCompartment$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-CylinderCompartment-new"></a><div class="section">
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameter_names"><a href="BaseCompartment.html#method-get_parameter_names"><code>midi::BaseCompartment$get_parameter_names()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameters"><a href="BaseCompartment.html#method-get_parameters"><code>midi::BaseCompartment$get_parameters()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_signal"><a href="BaseCompartment.html#method-get_signal"><code>midi::BaseCompartment$get_signal()</code></a></span></li>
+</ul></details></p><hr><a id="method-CylinderCompartment-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Instantiates a new cylinder compartment.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/CylinderCompartment.html">CylinderCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span>  <span class="va">axis</span>,</span>
-<span>  <span class="va">radius</span>,</span>
-<span>  <span class="va">diffusivity</span>,</span>
-<span>  radial_model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"soderman"</span>, <span class="st">"callaghan"</span>, <span class="st">"stanisz"</span>, <span class="st">"neuman"</span>, <span class="st">"vangelderen"</span><span class="op">)</span></span>
+<span>  axis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  restricted_compartment <span class="op">=</span> <span class="va"><a href="../reference/VanGelderenCompartment.html">VanGelderenCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -84,20 +88,10 @@
 cylinder.</p></dd>
 
 
-<dt><code>radius</code></dt>
-<dd><p>A numeric value specifying the radius of the cylinder in
-meters.</p></dd>
-
-
-<dt><code>diffusivity</code></dt>
-<dd><p>A numeric value specifying the diffusivity within the
-cylinder in m\(^2\).s\(^{-1}\).</p></dd>
-
-
-<dt><code>radial_model</code></dt>
-<dd><p>A character string specifying the radial model to
-use. Choices are <code>"soderman"</code>, <code>"callaghan"</code>, <code>"stanisz"</code>, <code>"neuman"</code>,
-and <code>"vangelderen"</code>. Defaults to <code>"soderman"</code>.</p></dd>
+<dt><code>restricted_compartment</code></dt>
+<dd><p>An instance of the
+<code><a href="CircularlyShapedCompartment.html">CircularlyShapedCompartment</a></code> class specifying the restricted
+compartment within the sphere. Defaults to a Van Gelderen compartment.</p></dd>
 
 
 </dl><p></p></div>
@@ -107,89 +101,15 @@ and <code>"vangelderen"</code>. Defaults to <code>"soderman"</code>.</p></dd>
 <p>An instance of the <code>CylinderCompartment</code> class.</p>
 </div>
 
-</div><p></p><hr><a id="method-CylinderCompartment-get_signal"></a><div class="section">
-<h3 id="method-get-signal-">Method <code>get_signal()</code><a class="anchor" aria-label="anchor" href="#method-get-signal-"></a></h3>
-<p>Computes the signal attenuation predicted by the model.</p><div class="section">
-<h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CylinderCompartment</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span></span>
-<span>  <span class="va">small_delta</span>,</span>
-<span>  <span class="va">big_delta</span>,</span>
-<span>  <span class="va">G</span>,</span>
-<span>  <span class="va">direction</span>,</span>
-<span>  echo_time <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  n_max <span class="op">=</span> <span class="fl">20L</span>,</span>
-<span>  m_max <span class="op">=</span> <span class="fl">50L</span></span>
-<span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>small_delta</code></dt>
-<dd><p>A numeric value specifying the duration of the
-gradient pulse in seconds.</p></dd>
-
-
-<dt><code>big_delta</code></dt>
-<dd><p>A numeric value specifying the duration between the
-gradient pulses in seconds.</p></dd>
-
-
-<dt><code>G</code></dt>
-<dd><p>A numeric value specifying the strength of the gradient in
-T.m\(^{-1}\).</p></dd>
-
-
-<dt><code>direction</code></dt>
-<dd><p>A length-3 numeric vector specifying the direction of
-the gradient.</p></dd>
-
-
-<dt><code>echo_time</code></dt>
-<dd><p>A numeric value specifying the echo time in seconds.</p></dd>
-
-
-<dt><code>n_max</code></dt>
-<dd><p>An integer value specifying the maximum order of the Bessel
-function. Defaults to <code>20L</code>.</p></dd>
-
-
-<dt><code>m_max</code></dt>
-<dd><p>An integer value specifying the maximum number of extrema
-for the Bessel function. Defaults to <code>50L</code>.</p></dd>
-
-
-</dl><p></p></div>
-</div>
-<div class="section">
-<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
-<p>A numeric value storing the predicted signal attenuation.</p>
-</div>
-<div class="section">
-<h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">cylinderComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/CylinderCompartment.html">CylinderCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span>  axis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  radius <span class="op">=</span> <span class="fl">1e-6</span>,</span>
-<span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span>,</span>
-<span>  radial_model <span class="op">=</span> <span class="st">"soderman"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">cylinderComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span></span>
-<span>  small_delta <span class="op">=</span> <span class="fl">0.03</span>,</span>
-<span>  big_delta <span class="op">=</span> <span class="fl">0.03</span>,</span>
-<span>  G <span class="op">=</span> <span class="fl">0.040</span>,</span>
-<span>  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-
 </div><p></p><hr><a id="method-CylinderCompartment-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CylinderCompartment</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
@@ -203,24 +123,21 @@ for the Bessel function. Defaults to <code>50L</code>.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## Method `CylinderCompartment$get_signal`</span></span></span>
-<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">cylinderComp</span> <span class="op">&lt;-</span> <span class="va">CylinderCompartment</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  axis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  radius <span class="op">=</span> <span class="fl">1e-6</span>,</span></span>
-<span class="r-in"><span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span>,</span></span>
-<span class="r-in"><span>  radial_model <span class="op">=</span> <span class="st">"soderman"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">cylinderComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  small_delta <span class="op">=</span> <span class="fl">0.03</span>,</span></span>
-<span class="r-in"><span>  big_delta <span class="op">=</span> <span class="fl">0.03</span>,</span></span>
-<span class="r-in"><span>  G <span class="op">=</span> <span class="fl">0.040</span>,</span></span>
-<span class="r-in"><span>  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">cylComp</span> <span class="op">&lt;-</span> <span class="va">CylinderCompartment</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">cylComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.002055938</span>
+<span class="r-in"><span><span class="va">cylComp</span><span class="op">$</span><span class="fu">get_parameter_names</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "CylinderAxis"        "CylinderRadius"      "CylinderDiffusivity"</span>
+<span class="r-in"><span><span class="va">cylComp</span><span class="op">$</span><span class="fu">get_parameters</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $CylinderAxis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 0 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $CylinderRadius</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $CylinderDiffusivity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -64,7 +64,7 @@
 
 <ul><li><p><a href="#method-BaseCompartment-get_signal"><code>BaseCompartment$get_signal()</code></a></p></li>
 <li><p><a href="#method-BaseCompartment-get_parameter_names"><code>BaseCompartment$get_parameter_names()</code></a></p></li>
-<li><p><a href="#method-BaseCompartment-get_parameter_values"><code>BaseCompartment$get_parameter_values()</code></a></p></li>
+<li><p><a href="#method-BaseCompartment-get_parameters"><code>BaseCompartment$get_parameters()</code></a></p></li>
 <li><p><a href="#method-BaseCompartment-clone"><code>BaseCompartment$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-BaseCompartment-get_signal"></a><div class="section">
 <h3 id="method-get-signal-">Method <code>get_signal()</code><a class="anchor" aria-label="anchor" href="#method-get-signal-"></a></h3>
@@ -74,6 +74,7 @@
 <span>  <span class="va">small_delta</span>,</span>
 <span>  <span class="va">big_delta</span>,</span>
 <span>  <span class="va">G</span>,</span>
+<span>  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  echo_time <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  n_max <span class="op">=</span> <span class="fl">20L</span>,</span>
 <span>  m_max <span class="op">=</span> <span class="fl">50L</span></span>
@@ -95,6 +96,11 @@ gradient pulses in milliseconds.</p></dd>
 <dt><code>G</code></dt>
 <dd><p>A numeric value specifying the strength of the gradient in
 mT.\(\mu\)m\(^{-1}\).</p></dd>
+
+
+<dt><code>direction</code></dt>
+<dd><p>A numeric vector specifying the direction of the
+gradient. Defaults to <code>c(0, 0, 1)</code>.</p></dd>
 
 
 <dt><code>echo_time</code></dt>
@@ -121,37 +127,28 @@ for the Bessel function. Defaults to <code>50L</code>.</p></dd>
 <div class="section">
 <h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">freeComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FreeCompartment.html">FreeCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">freeComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040e-3</span><span class="op">)</span></span>
+<span><span class="va">freeComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sphereComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SphereCompartment.html">SphereCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">sphereComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040e-3</span><span class="op">)</span></span>
+<span><span class="va">sphereComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sodermanComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SodermanCompartment.html">SodermanCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">sodermanComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040e-3</span><span class="op">)</span></span>
+<span><span class="va">sodermanComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">staniszComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/StaniszCompartment.html">StaniszCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span>  radius <span class="op">=</span> <span class="fl">1e-6</span>,</span>
-<span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">staniszComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span><span class="fl">0.03</span>, <span class="fl">0.03</span>, <span class="fl">0.040</span><span class="op">)</span></span>
+<span><span class="va">staniszComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/StaniszCompartment.html">StaniszCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">staniszComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">neumanComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/NeumanCompartment.html">NeumanCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span>  radius <span class="op">=</span> <span class="fl">1e-6</span>,</span>
-<span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span></span>
+<span><span class="va">neumanComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/NeumanCompartment.html">NeumanCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">neumanComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span></span>
+<span>  small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span>,</span>
+<span>  echo_time <span class="op">=</span> <span class="fl">40</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">neumanComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span><span class="fl">0.03</span>, <span class="fl">0.03</span>, <span class="fl">0.040</span>, echo_time <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">callaghanComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/CallaghanCompartment.html">CallaghanCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span>  radius <span class="op">=</span> <span class="fl">1e-6</span>,</span>
-<span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">callaghanComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span><span class="fl">0.03</span>, <span class="fl">0.03</span>, <span class="fl">0.040</span><span class="op">)</span></span>
+<span><span class="va">callaghanComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/CallaghanCompartment.html">CallaghanCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">callaghanComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">vanGelderenComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/VanGelderenCompartment.html">VanGelderenCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span>  radius <span class="op">=</span> <span class="fl">1e-6</span>,</span>
-<span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">vanGelderenComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span><span class="fl">0.03</span>, <span class="fl">0.03</span>, <span class="fl">0.040</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<span><span class="va">vanGelderenComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/VanGelderenCompartment.html">VanGelderenCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">vanGelderenComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -174,11 +171,11 @@ parameters.</p>
 </div>
 
 
-</div><p></p><hr><a id="method-BaseCompartment-get_parameter_values"></a><div class="section">
-<h3 id="method-get-parameter-values-">Method <code>get_parameter_values()</code><a class="anchor" aria-label="anchor" href="#method-get-parameter-values-"></a></h3>
+</div><p></p><hr><a id="method-BaseCompartment-get_parameters"></a><div class="section">
+<h3 id="method-get-parameters-">Method <code>get_parameters()</code><a class="anchor" aria-label="anchor" href="#method-get-parameters-"></a></h3>
 <p>Returns the values of the compartment parameters</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">BaseCompartment</span><span class="op">$</span><span class="fu">get_parameter_values</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">BaseCompartment</span><span class="op">$</span><span class="fu">get_parameters</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -189,7 +186,7 @@ parameters.</p>
 <div class="section">
 <h4 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">freeComp</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FreeCompartment.html">FreeCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">freeComp</span><span class="op">$</span><span class="fu">get_parameter_values</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<span><span class="va">freeComp</span><span class="op">$</span><span class="fu">get_parameters</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -221,44 +218,35 @@ parameters.</p>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">freeComp</span> <span class="op">&lt;-</span> <span class="va"><a href="FreeCompartment.html">FreeCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">freeComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040e-3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">freeComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.002055938</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sphereComp</span> <span class="op">&lt;-</span> <span class="va"><a href="SphereCompartment.html">SphereCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">sphereComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040e-3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sphereComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1204485</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sodermanComp</span> <span class="op">&lt;-</span> <span class="va"><a href="SodermanCompartment.html">SodermanCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">sodermanComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040e-3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sodermanComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01566614</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">staniszComp</span> <span class="op">&lt;-</span> <span class="va"><a href="StaniszCompartment.html">StaniszCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  radius <span class="op">=</span> <span class="fl">1e-6</span>,</span></span>
-<span class="r-in"><span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">staniszComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span><span class="fl">0.03</span>, <span class="fl">0.03</span>, <span class="fl">0.040</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9991432</span>
+<span class="r-in"><span><span class="va">staniszComp</span> <span class="op">&lt;-</span> <span class="va"><a href="StaniszCompartment.html">StaniszCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">staniszComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.08834543</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">neumanComp</span> <span class="op">&lt;-</span> <span class="va"><a href="NeumanCompartment.html">NeumanCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  radius <span class="op">=</span> <span class="fl">1e-6</span>,</span></span>
-<span class="r-in"><span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span></span></span>
+<span class="r-in"><span><span class="va">neumanComp</span> <span class="op">&lt;-</span> <span class="va"><a href="NeumanCompartment.html">NeumanCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">neumanComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span>,</span></span>
+<span class="r-in"><span>  echo_time <span class="op">=</span> <span class="fl">40</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">neumanComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span><span class="fl">0.03</span>, <span class="fl">0.03</span>, <span class="fl">0.040</span>, echo_time <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">callaghanComp</span> <span class="op">&lt;-</span> <span class="va"><a href="CallaghanCompartment.html">CallaghanCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  radius <span class="op">=</span> <span class="fl">1e-6</span>,</span></span>
-<span class="r-in"><span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">callaghanComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span><span class="fl">0.03</span>, <span class="fl">0.03</span>, <span class="fl">0.040</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-in"><span><span class="va">callaghanComp</span> <span class="op">&lt;-</span> <span class="va"><a href="CallaghanCompartment.html">CallaghanCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">callaghanComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.02622708</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">vanGelderenComp</span> <span class="op">&lt;-</span> <span class="va"><a href="VanGelderenCompartment.html">VanGelderenCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  radius <span class="op">=</span> <span class="fl">1e-6</span>,</span></span>
-<span class="r-in"><span>  diffusivity <span class="op">=</span> <span class="fl">2.0e-9</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">vanGelderenComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span><span class="fl">0.03</span>, <span class="fl">0.03</span>, <span class="fl">0.040</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-in"><span><span class="va">vanGelderenComp</span> <span class="op">&lt;-</span> <span class="va"><a href="VanGelderenCompartment.html">VanGelderenCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">vanGelderenComp</span><span class="op">$</span><span class="fu">get_signal</span><span class="op">(</span>small_delta <span class="op">=</span> <span class="fl">30</span>, big_delta <span class="op">=</span> <span class="fl">30</span>, G <span class="op">=</span> <span class="fl">0.040</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1204485</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co">## Method `BaseCompartment$get_parameter_names`</span></span></span>
@@ -269,12 +257,14 @@ parameters.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "FreeDiffusivity"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## Method `BaseCompartment$get_parameter_values`</span></span></span>
+<span class="r-in"><span><span class="co">## Method `BaseCompartment$get_parameters`</span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">freeComp</span> <span class="op">&lt;-</span> <span class="va"><a href="FreeCompartment.html">FreeCompartment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">freeComp</span><span class="op">$</span><span class="fu">get_parameter_values</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">freeComp</span><span class="op">$</span><span class="fu">get_parameters</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $FreeDiffusivity</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
