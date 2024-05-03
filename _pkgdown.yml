@@ -17,14 +17,10 @@ reference:
     - SodermanCompartment
     - StaniszCompartment
     - VanGelderenCompartment
-  - subtitle: Free diffusion compartment
+  - subtitle: Models for diffusion MRI
   - contents:
     - FreeCompartment
-  - subtitle: Isotropically restricted compartments
-  - contents:
     - SphereCompartment
-  - subtitle: Anisotropically restricted compartments
-  - contents:
     - CylinderCompartment
     - CylinderBundleCompartment
   - title: Statistical distributions
@@ -33,7 +29,7 @@ reference:
     - WatsonDistribution
   - title: Utility functions
   - contents:
-    - ryclinders
+    - rcylinders
     - run_app
 
 news:
