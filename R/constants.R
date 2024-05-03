@@ -5,10 +5,10 @@
 # Units:
 # - um
 # - ms
-# - mT
+# - uT
 
 gyromagnetic_ratio <- function() {
-  267.5987 # rad ms^-1 mT^-1
+  0.2675987 # rad ms^-1 uT^-1
 }
 
 default_free_diffusivity <- function() {

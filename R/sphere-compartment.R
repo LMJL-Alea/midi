@@ -3,6 +3,11 @@
 #' @description A class to model restricted diffusion in a sphere.
 #'
 #' @export
+#' @examples
+#' sphComp <- SphereCompartment$new()
+#' sphComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
+#' sphComp$get_parameter_names()
+#' sphComp$get_parameters()
 SphereCompartment <- R6::R6Class(
   "SphereCompartment",
   inherit = CircularlyShapedCompartment,
@@ -19,11 +24,11 @@ SphereCompartment <- R6::R6Class(
         cli::cli_abort("The restricted compartment must be one of the circularly
                        shaped compartments.")
       }
-      param_names <- restricted_compartment$get_parameter_names()
-      param_values <- restricted_compartment$get_parameter_values()
+
+      params <- restricted_compartment$get_parameters()
       super$initialize(
-        radius = param_values[param_names == "Radius"],
-        diffusivity = param_values[param_names == "Diffusivity"]
+        radius = params$Radius,
+        diffusivity = params$Diffusivity
       )
       private$internal_compartment <- restricted_compartment
     }
@@ -31,13 +36,23 @@ SphereCompartment <- R6::R6Class(
   private = list(
     internal_compartment = NULL,
     compute_signal = function(small_delta, big_delta, G,
+                              direction = c(0, 0, 1),
                               echo_time = NULL,
                               n_max = 20L,
                               m_max = 50L) {
       private$internal_compartment$get_signal(
-        small_delta, big_delta, G, echo_time, n_max, m_max
+        small_delta = small_delta,
+        big_delta = big_delta,
+        G = G,
+        direction = direction,
+        echo_time = echo_time,
+        n_max = n_max,
+        m_max = m_max
       )
     },
-    parameter_names = function() c("SphereRadius", "SphereDiffusivity")
+    parameters = function() list(
+      SphereRadius = private$radius,
+      SphereDiffusivity = private$diffusivity
+    )
   )
 )

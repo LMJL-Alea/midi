@@ -7,33 +7,51 @@
 A class to model restricted diffusion in a bundle of cylinders.
 }
 \examples{
+withr::with_seed(1234, {
+  cyls <- rcylinders(
+    n = 100,
+    axis_mean = c(0, 0, 1),
+    radius_mean = 5,
+    diffusivity_mean = 3,
+    axis_concentration = 10,
+    radius_sd = 1,
+    diffusivity_sd = 0
+  )
+})
 
-## ------------------------------------------------
-## Method `CylinderBundleCompartment$get_signal`
-## ------------------------------------------------
-
-cylinderBundleComp <- CylinderBundleCompartment$new(
-  axis = c(0, 0, 1),
-  radius = 1e-5,
-  diffusivity = 2.0e-9,
+comp <- CylinderBundleCompartment$new(
   cylinder_density = 0.5,
-  radial_model = "soderman"
+  cylinder_compartments = cyls
 )
-cylinderBundleComp$get_signal(
-  small_delta = 0.03,
-  big_delta = 0.03,
+
+comp$get_signal(
+  small_delta = 30,
+  big_delta = 30,
   G = 0.040,
   direction = c(0, 0, 1)
 )
+
+comp$get_parameters()
+}
+\section{Super class}{
+\code{\link[midi:BaseCompartment]{midi::BaseCompartment}} -> \code{CylinderBundleCompartment}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-CylinderBundleCompartment-new}{\code{CylinderBundleCompartment$new()}}
-\item \href{#method-CylinderBundleCompartment-get_signal}{\code{CylinderBundleCompartment$get_signal()}}
 \item \href{#method-CylinderBundleCompartment-clone}{\code{CylinderBundleCompartment$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameter_names"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameter_names'><code>midi::BaseCompartment$get_parameter_names()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameters"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameters'><code>midi::BaseCompartment$get_parameters()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_signal"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_signal'><code>midi::BaseCompartment$get_signal()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CylinderBundleCompartment-new"></a>}}
 \if{latex}{\out{\hypertarget{method-CylinderBundleCompartment-new}{}}}
@@ -41,133 +59,41 @@ cylinderBundleComp$get_signal(
 Instantiates a new cylinder bundle compartment.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CylinderBundleCompartment$new(
-  axis,
-  radius,
-  diffusivity,
   cylinder_density,
+  cylinder_compartments,
   axial_diffusivity = NULL,
-  radial_diffusivity = NULL,
-  n_cylinders = 1L,
-  axis_concentration = Inf,
-  radius_sd = 0,
-  radial_model = c("soderman", "callaghan", "stanisz", "neuman", "vangelderen"),
-  seed = 1234
+  radial_diffusivity = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{axis}}{A numeric vector of length 3 and unit norm specifying the
-mean axis of the cylinder population.}
-
-\item{\code{radius}}{A positive numeric value specifying the mean radius of the
-cylinder population in meters.}
-
-\item{\code{diffusivity}}{A positive numeric value specifying the diffusivity
-within the cylinders in m\eqn{^2}.s\eqn{^{-1}}.}
-
 \item{\code{cylinder_density}}{A numeric value specifying the density of the
 cylinders in the voxel. Must be between 0 and 1.}
+
+\item{\code{cylinder_compartments}}{A list of instances of the
+\code{\link{CylinderCompartment}} class specifying the compartments within the
+bundle.}
 
 \item{\code{axial_diffusivity}}{A numeric value specifying the axial diffusivity
 in the space outside the cylinders in m\eqn{^2}.s\eqn{^{-1}}. If not
 provided, defaults to a tortuosity model reducing the intrinsic
-diffusivity depending on orientation dispersion. Defaults to \code{NULL}.}
+diffusivity depending on orientation dispersion. Defaults to \code{NULL} in
+which case the extracellular axial diffusivity is set via a tortuosity
+model based on the dispersion in orientation.}
 
 \item{\code{radial_diffusivity}}{A numeric value specifying the radial
 diffusivity in the space outside the cylinders in
-m\eqn{^2}.s\eqn{^{-1}}. If not provided, defaults to a tortuosity model
-reducing the axial diffusivity depending on radius heterogeneity.
-Defaults to \code{NULL}.}
-
-\item{\code{n_cylinders}}{An integer value specifying the number of cylinders in
-the bundle. Defaults to \code{1L}.}
-
-\item{\code{axis_concentration}}{A numeric value specifying the concentration of
-cylinders along the mean axis. Defaults to \code{Inf}.}
-
-\item{\code{radius_sd}}{A numeric value specifying the standard deviation of the
-radius of the cylinder population in meters. Defaults to \code{0}.}
-
-\item{\code{radial_model}}{A character string specifying the radial model to
-use. Choices are \code{"soderman"}, \code{"callaghan"}, \code{"stanisz"}, \code{"neuman"},
-and \code{"vangelderen"}. Defaults to \code{"soderman"}.}
-
-\item{\code{seed}}{An integer value specifying the seed for the random number
-generator. Defaults to \code{1234}.}
+m\eqn{^2}.s\eqn{^{-1}}. Defaults to \code{NULL} in which case the
+extracellular radial diffusivity is set via a tortuosity model based on
+the intracellular density.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 An instance of the \code{\link{CylinderBundleCompartment}} class.
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CylinderBundleCompartment-get_signal"></a>}}
-\if{latex}{\out{\hypertarget{method-CylinderBundleCompartment-get_signal}{}}}
-\subsection{Method \code{get_signal()}}{
-Computes the signal attenuation predicted by the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CylinderBundleCompartment$get_signal(
-  small_delta,
-  big_delta,
-  G,
-  direction,
-  echo_time = NULL,
-  n_max = 20L,
-  m_max = 50L
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{small_delta}}{A numeric value specifying the duration of the
-gradient pulse in seconds.}
-
-\item{\code{big_delta}}{A numeric value specifying the duration between the
-gradient pulses in seconds.}
-
-\item{\code{G}}{A numeric value specifying the strength of the gradient in
-T.m\eqn{^{-1}}.}
-
-\item{\code{direction}}{A length-3 numeric vector specifying the direction of
-the gradient.}
-
-\item{\code{echo_time}}{A numeric value specifying the echo time in seconds.}
-
-\item{\code{n_max}}{An integer value specifying the maximum order of the Bessel
-function. Defaults to \code{20L}.}
-
-\item{\code{m_max}}{An integer value specifying the maximum number of extrema
-for the Bessel function. Defaults to \code{50L}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A numeric value storing the predicted signal attenuation.
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{cylinderBundleComp <- CylinderBundleCompartment$new(
-  axis = c(0, 0, 1),
-  radius = 1e-5,
-  diffusivity = 2.0e-9,
-  cylinder_density = 0.5,
-  radial_model = "soderman"
-)
-cylinderBundleComp$get_signal(
-  small_delta = 0.03,
-  big_delta = 0.03,
-  G = 0.040,
-  direction = c(0, 0, 1)
-)
-}
-\if{html}{\out{</div>}}
-
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CylinderBundleCompartment-clone"></a>}}

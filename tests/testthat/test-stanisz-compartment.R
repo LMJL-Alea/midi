@@ -1,12 +1,17 @@
 test_that("`StaniszCompartment` class works", {
   comp <- StaniszCompartment$new(
-    radius = 1e-6,
-    diffusivity = 2.0e-9
+    radius = 5,
+    diffusivity = 3
   )
+  expect_equal(comp$get_parameters(), list(
+    Radius = 5,
+    Diffusivity = 3
+  ))
   out <- comp$get_signal(
-    small_delta = 0.03,
-    big_delta = 0.03,
+    small_delta = 30,
+    big_delta = 30,
     G = 0.040
   )
   expect_true(inherits(comp, "CircularlyShapedCompartment"))
+  expect_equal(round(out, 5), 0.80281)
 })

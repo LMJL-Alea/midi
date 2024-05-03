@@ -3,85 +3,117 @@
 #' @description A class to model restricted diffusion in a bundle of cylinders.
 #'
 #' @export
+#' @examples
+#' withr::with_seed(1234, {
+#'   cyls <- rcylinders(
+#'     n = 100,
+#'     axis_mean = c(0, 0, 1),
+#'     radius_mean = 5,
+#'     diffusivity_mean = 3,
+#'     axis_concentration = 10,
+#'     radius_sd = 1,
+#'     diffusivity_sd = 0
+#'   )
+#' })
+#'
+#' comp <- CylinderBundleCompartment$new(
+#'   cylinder_density = 0.5,
+#'   cylinder_compartments = cyls
+#' )
+#'
+#' comp$get_signal(
+#'   small_delta = 30,
+#'   big_delta = 30,
+#'   G = 0.040,
+#'   direction = c(0, 0, 1)
+#' )
+#'
+#' comp$get_parameters()
 CylinderBundleCompartment <- R6::R6Class(
   "CylinderBundleCompartment",
+  inherit = BaseCompartment,
   public = list(
     #' @description Instantiates a new cylinder bundle compartment.
     #'
-    #' @param axis A numeric vector of length 3 and unit norm specifying the
-    #'   mean axis of the cylinder population.
-    #' @param radius A positive numeric value specifying the mean radius of the
-    #'   cylinder population in meters.
-    #' @param diffusivity A positive numeric value specifying the diffusivity
-    #'   within the cylinders in m\eqn{^2}.s\eqn{^{-1}}.
     #' @param cylinder_density A numeric value specifying the density of the
     #'  cylinders in the voxel. Must be between 0 and 1.
+    #' @param cylinder_compartments A list of instances of the
+    #'   [`CylinderCompartment`] class specifying the compartments within the
+    #'   bundle.
     #' @param axial_diffusivity A numeric value specifying the axial diffusivity
     #'   in the space outside the cylinders in m\eqn{^2}.s\eqn{^{-1}}. If not
     #'   provided, defaults to a tortuosity model reducing the intrinsic
-    #'   diffusivity depending on orientation dispersion. Defaults to `NULL`.
+    #'   diffusivity depending on orientation dispersion. Defaults to `NULL` in
+    #'   which case the extracellular axial diffusivity is set via a tortuosity
+    #'   model based on the dispersion in orientation.
     #' @param radial_diffusivity A numeric value specifying the radial
     #'   diffusivity in the space outside the cylinders in
-    #'   m\eqn{^2}.s\eqn{^{-1}}. If not provided, defaults to a tortuosity model
-    #'   reducing the axial diffusivity depending on radius heterogeneity.
-    #'   Defaults to `NULL`.
-    #' @param n_cylinders An integer value specifying the number of cylinders in
-    #'   the bundle. Defaults to `1L`.
-    #' @param axis_concentration A numeric value specifying the concentration of
-    #'   cylinders along the mean axis. Defaults to `Inf`.
-    #' @param radius_sd A numeric value specifying the standard deviation of the
-    #'  radius of the cylinder population in meters. Defaults to `0`.
-    #' @param radial_model A character string specifying the radial model to
-    #'   use. Choices are `"soderman"`, `"callaghan"`, `"stanisz"`, `"neuman"`,
-    #'   and `"vangelderen"`. Defaults to `"soderman"`.
-    #' @param seed An integer value specifying the seed for the random number
-    #'   generator. Defaults to `1234`.
+    #'   m\eqn{^2}.s\eqn{^{-1}}. Defaults to `NULL` in which case the
+    #'   extracellular radial diffusivity is set via a tortuosity model based on
+    #'   the intracellular density.
     #'
     #' @return An instance of the [`CylinderBundleCompartment`] class.
-    initialize = function(axis,
-                          radius,
-                          diffusivity,
-                          cylinder_density,
+    initialize = function(cylinder_density,
+                          cylinder_compartments,
                           axial_diffusivity = NULL,
-                          radial_diffusivity = NULL,
-                          n_cylinders = 1L,
-                          axis_concentration = Inf,
-                          radius_sd = 0,
-                          radial_model = c("soderman", "callaghan", "stanisz",
-                                           "neuman", "vangelderen"),
-                          seed = 1234) {
-      radial_model <- rlang::arg_match(radial_model)
-
-      # Set axis
-      if (length(axis) != 3L || abs(sum(axis^2) - 1) > sqrt(.Machine$double.eps))
-        cli::cli_abort("The axis must be a length-3 unit vector.")
-      private$axis <- axis
-
-      # Set radius
-      if (radius <= 0)
-        cli::cli_abort("The radius must be positive.")
-      private$radius <- radius
-
-      # Set diffusivity
-      if (diffusivity <= 0)
-        cli::cli_abort("The diffusivity must be positive.")
-      private$diffusivity <- diffusivity
-
+                          radial_diffusivity = NULL) {
       # Set cylinder density
       if (cylinder_density < 0 || cylinder_density > 1) {
         cli::cli_abort("The cylinder density must be between 0 and 1.")
       }
       private$cylinder_density <- cylinder_density
 
+      # Set cylinder compartments
+      private$cylinder_compartments <- cylinder_compartments
+
+      # Retrieve parameters from the cylinder compartments
+      params <- cylinder_compartments |>
+        purrr::map(\(comp) {
+          if (!inherits(comp, "CylinderCompartment")) {
+            cli::cli_abort("All compartments must be of class CylinderCompartment.")
+          }
+          comp$get_parameters()
+        }) |>
+        purrr::list_transpose()
+
+      # Then, extract axis sample and fit Watson distribution
+      wd <- WatsonDistribution$new()
+      wd$fit(params$CylinderAxis)
+      private$axis <- wd$get_axis()
+      private$axis_concentration <- wd$get_concentration()
+
+      gd <- GammaDistribution$new()
+      # Then, extract radius sample and fit gamma distribution
+      radius_sample <- params$CylinderRadius
+      if (var(radius_sample) == 0) {
+        private$radius <- radius_sample[1]
+        private$radius_sd <- 0
+      } else {
+        gd$fit(params$CylinderRadius)
+        private$radius <- gd$get_shape() * gd$get_scale()
+        private$radius_sd <- sqrt(gd$get_shape()) * gd$get_scale()
+      }
+
+      # Finally, extract diffusivity sample and fit gamma distribution
+      diffusivity_sample <- params$CylinderDiffusivity
+      if (var(diffusivity_sample) == 0) {
+        private$diffusivity <- diffusivity_sample[1]
+        private$diffusivity_sd <- 0
+      } else {
+        gd$fit(params$CylinderDiffusivity)
+        private$diffusivity <- gd$get_shape() * gd$get_scale()
+        private$diffusivity_sd <- sqrt(gd$get_shape()) * gd$get_scale()
+      }
+
       # Set axial diffusivity
       if (is.null(axial_diffusivity)) {
-        if (is.infinite(axis_concentration)) {
-          axial_diffusivity <- diffusivity
+        if (is.infinite(private$axis_concentration)) {
+          axial_diffusivity <- private$diffusivity
         } else {
-          axial_diffusivity <- diffusivity * concentration_index(axis_concentration)^2
+          axial_diffusivity <- private$diffusivity * wd$get_rvalue()^2
         }
       } else {
-        if (axial_diffusivity > diffusivity)
+        if (axial_diffusivity > private$diffusivity)
           cli::cli_abort("The axial diffusivity should not be greater than the intrinsic diffusivity.")
       }
       private$axial_diffusivity <- axial_diffusivity
@@ -94,68 +126,24 @@ CylinderBundleCompartment <- R6::R6Class(
           cli::cli_abort("The radial diffusivity should not be greater than the axial diffusivity.")
       }
       private$radial_diffusivity <- radial_diffusivity
-
-      if (cylinder_density > 0) {
-        if (is.infinite(axis_concentration) && radius_sd == 0) {
-          axis_sample <- list(axis)
-          radius_sample <- list(radius)
-        } else {
-          withr::with_seed(seed, {
-            axis_sample <- rwatson(n_cylinders, axis, axis_concentration)
-            radius_sample <- rgamma(n_cylinders, radius, radius_sd)
-          })
-        }
-
-        private$cylinder_compartments <- purrr::map2(
-          .x = axis_sample,
-          .y = radius_sample,
-          .f = \(axis, radius) {
-            CylinderCompartment$new(
-              axis = axis,
-              radius = radius,
-              diffusivity = diffusivity,
-              radial_model = radial_model
-            )
-          })
-      }
-    },
-
-    #' @description Computes the signal attenuation predicted by the model.
-    #'
-    #' @param small_delta A numeric value specifying the duration of the
-    #'  gradient pulse in seconds.
-    #' @param big_delta A numeric value specifying the duration between the
-    #'  gradient pulses in seconds.
-    #' @param G A numeric value specifying the strength of the gradient in
-    #'  T.m\eqn{^{-1}}.
-    #' @param direction A length-3 numeric vector specifying the direction of
-    #'   the gradient.
-    #' @param echo_time A numeric value specifying the echo time in seconds.
-    #' @param n_max An integer value specifying the maximum order of the Bessel
-    #'  function. Defaults to `20L`.
-    #' @param m_max An integer value specifying the maximum number of extrema
-    #' for the Bessel function. Defaults to `50L`.
-    #'
-    #' @return A numeric value storing the predicted signal attenuation.
-    #'
-    #' @examples
-    #' cylinderBundleComp <- CylinderBundleCompartment$new(
-    #'   axis = c(0, 0, 1),
-    #'   radius = 1e-5,
-    #'   diffusivity = 2.0e-9,
-    #'   cylinder_density = 0.5,
-    #'   radial_model = "soderman"
-    #' )
-    #' cylinderBundleComp$get_signal(
-    #'   small_delta = 0.03,
-    #'   big_delta = 0.03,
-    #'   G = 0.040,
-    #'   direction = c(0, 0, 1)
-    #' )
-    get_signal = function(small_delta, big_delta, G, direction,
-                          echo_time = NULL,
-                          n_max = 20L,
-                          m_max = 50L) {
+    }
+  ),
+  private = list(
+    axis = NULL,
+    axis_concentration = NULL,
+    radius = NULL,
+    radius_sd = NULL,
+    diffusivity = NULL,
+    diffusivity_sd = NULL,
+    cylinder_compartments = NULL,
+    cylinder_density = NULL,
+    axial_diffusivity = NULL, # um^2.ms^-1
+    radial_diffusivity = NULL, # um^2.ms^-1
+    compute_signal = function(small_delta, big_delta, G,
+                              direction = c(0, 0, 1),
+                              echo_time = NULL,
+                              n_max = 20L,
+                              m_max = 50L) {
       b <- bvalue(small_delta, big_delta, G)
       work_value <- (private$axial_diffusivity - private$radial_diffusivity) * sum(direction * private$axis)^2
       hindered_signal <- exp(-b * (private$radial_diffusivity + work_value))
@@ -165,28 +153,30 @@ CylinderBundleCompartment <- R6::R6Class(
       cylinder_contribs <- purrr::map_dbl(
         .x = private$cylinder_compartments,
         .f = \(compartment) {
-        compartment$get_signal(
-          small_delta = small_delta,
-          big_delta = big_delta,
-          G = G,
-          direction = direction,
-          echo_time = echo_time,
-          n_max = n_max,
-          m_max = m_max
-        )
-      })
+          compartment$get_signal(
+            small_delta = small_delta,
+            big_delta = big_delta,
+            G = G,
+            direction = direction,
+            echo_time = echo_time,
+            n_max = n_max,
+            m_max = m_max
+          )
+        })
       restricted_signal <- mean(cylinder_contribs)
-      return(private$cylinder_density * restricted_signal +
-               (1 - private$cylinder_density) * hindered_signal)
-    }
-  ),
-  private = list(
-    axis = NULL,
-    radius = NULL,
-    diffusivity = NULL,
-    cylinder_compartments = NULL,
-    cylinder_density = NULL,
-    axial_diffusivity = NULL, # m^2.s^-1
-    radial_diffusivity = NULL # m^2.s^-1
+      private$cylinder_density * restricted_signal +
+        (1 - private$cylinder_density) * hindered_signal
+    },
+    parameters = function() list(
+      CylinderAxisMean = private$axis,
+      CylinderAxisConcentration = private$axis_concentration,
+      CylinderRadiusMean = private$radius,
+      CylinderRadiusStd = private$radius_sd,
+      CylinderDiffusivityMean = private$diffusivity,
+      CylinderDiffusivityStd = private$diffusivity_sd,
+      CylinderDensity = private$cylinder_density,
+      CylinderAxialDiffusivity = private$axial_diffusivity,
+      CylinderRadialDiffusivity = private$radial_diffusivity
+    )
   )
 )

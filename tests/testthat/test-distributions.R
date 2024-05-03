@@ -8,30 +8,32 @@ test_that("`rotation_matrix_from_z_to_mu()` works", {
   expect_equal(as.numeric(R %*% z), c(0, 0, -1))
 })
 
-test_that("`rwatson()` works", {
-  mu <- c(0, 0, 1)
+test_that("the Watson distribution` works", {
   n <- 10L
+  mu <- c(0, 0, 1)
   kappa <- Inf
-  samples <- rwatson(n, mu, kappa)
+  wd <- WatsonDistribution$new(mu, kappa)
+  samples <- wd$random(n)
   expect_equal(length(samples), n)
   kappa <- 10
-  samples <- rwatson(n, mu, kappa)
+  wd <- WatsonDistribution$new(mu, kappa)
+  samples <- wd$random(n)
   expect_equal(length(samples), n)
   kappa <- -10
-  samples <- rwatson(n, mu, kappa)
+  wd <- WatsonDistribution$new(mu, kappa)
+  samples <- wd$random(n)
   expect_equal(length(samples), n)
   kappa <- 0
-  samples <- rwatson(n, mu, kappa)
+  wd <- WatsonDistribution$new(mu, kappa)
+  samples <- wd$random(n)
   expect_equal(length(samples), n)
 })
 
-test_that("`rgamma() works", {
-  mu <- 1
+test_that("the Gamma distribution works", {
   n <- 10L
-  sd <- 1
-  samples <- rgamma(n, mu, sd)
-  expect_equal(length(samples), n)
-  sd <- 0
-  samples <- rgamma(n, mu, sd)
+  shape <- 1
+  scale <- 1
+  gd <- GammaDistribution$new(shape, scale)
+  samples <- gd$random(n)
   expect_equal(length(samples), n)
 })

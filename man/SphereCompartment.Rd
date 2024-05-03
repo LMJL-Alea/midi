@@ -6,6 +6,12 @@
 \description{
 A class to model restricted diffusion in a sphere.
 }
+\examples{
+sphComp <- SphereCompartment$new()
+sphComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
+sphComp$get_parameter_names()
+sphComp$get_parameters()
+}
 \section{Super classes}{
 \code{\link[midi:BaseCompartment]{midi::BaseCompartment}} -> \code{\link[midi:CircularlyShapedCompartment]{midi::CircularlyShapedCompartment}} -> \code{SphereCompartment}
 }
@@ -20,7 +26,7 @@ A class to model restricted diffusion in a sphere.
 <details open><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameter_names"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameter_names'><code>midi::BaseCompartment$get_parameter_names()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameter_values"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameter_values'><code>midi::BaseCompartment$get_parameter_values()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameters"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameters'><code>midi::BaseCompartment$get_parameters()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_signal"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_signal'><code>midi::BaseCompartment$get_signal()</code></a></span></li>
 </ul>
 </details>

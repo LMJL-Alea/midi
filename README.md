@@ -84,23 +84,41 @@ devtools::install_github("lmjl-alea/midi")
 
 ## Example
 
-We can instantiate a cylinder bundle compartment as follows:
+We can instantiate a cylinder compartment as follows:
 
 ``` r
 library(midi)
-cylinderBundleComp <- CylinderBundleCompartment$new(
+restrComp <- VanGelderenCompartment$new(
+  radius = 0.5, # um
+  diffusivity = 3 # um^2/ms
+)
+cylComp <- CylinderCompartment$new(
   axis = c(0, 0, 1),
-  radius = 1e-5,
-  diffusivity = 2.0e-9,
-  cylinder_density = 0.5,
-  radial_model = "soderman"
+  restricted_compartment = restrComp
 )
 ```
 
 Note that the instantiation of the compartment requires the
-specification of the cylinder axis, radius, diffusivity, cylinder
-density, and radial model, which are only the parameters related to the
-cylinder bundle geometry.
+specification of the cylinder axis, radius and diffusivity, which are
+only the parameters related to the cylinder geometry. The radius and
+diffusivity are in fact the parameters of the restricted compartment,
+which is first instantiated and then passed to the cylinder compartment.
+Several other restricted compartments are available in the package.
+
+Once instantiated, the compartment object can be used to access the list
+of its parameters:
+
+``` r
+cylComp$get_parameters()
+#> $CylinderAxis
+#> [1] 0 0 1
+#> 
+#> $CylinderRadius
+#> [1] 0.5
+#> 
+#> $CylinderDiffusivity
+#> [1] 3
+```
 
 The parameters related to the experimental conditions are specified when
 calling the `get_signal` method which computes the signal attenuation
@@ -108,25 +126,25 @@ for the compartment. In this example, we consider the following
 experimental conditions:
 
 ``` r
-cylinderBundleComp$get_signal(
-  small_delta = 0.03,
-  big_delta = 0.03,
-  G = 0.040,
+cylComp$get_signal(
+  small_delta = 30, # ms
+  big_delta = 30, # ms
+  G = 0.040, # uT/um
   direction = c(0, 0, 1)
 )
-#> [1] 0.01616863
+#> [1] 0.002055938
 ```
 
 We can also simulate and visualize cylinder bundles:
 
 ``` r
 density <- 0.7
-voxel_size <- 5 # micrometers
+voxel_size <- 5 # um
 out <- simulate_bundle(density, voxel_size)
 plot(out)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 A 3D visualization of the cylinder bundle powered by the
 [**plotly**](https://plotly.com/r/) package can be obtained by calling

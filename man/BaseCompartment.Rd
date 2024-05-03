@@ -13,37 +13,28 @@ The base class for compartment models.
 ## ------------------------------------------------
 
 freeComp <- FreeCompartment$new()
-freeComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040e-3)
+freeComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
 
 sphereComp <- SphereCompartment$new()
-sphereComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040e-3)
+sphereComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
 
 sodermanComp <- SodermanCompartment$new()
-sodermanComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040e-3)
+sodermanComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
 
-staniszComp <- StaniszCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-staniszComp$get_signal(0.03, 0.03, 0.040)
+staniszComp <- StaniszCompartment$new()
+staniszComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
 
-neumanComp <- NeumanCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
+neumanComp <- NeumanCompartment$new()
+neumanComp$get_signal(
+  small_delta = 30, big_delta = 30, G = 0.040,
+  echo_time = 40
 )
-neumanComp$get_signal(0.03, 0.03, 0.040, echo_time = 0.040)
 
-callaghanComp <- CallaghanCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-callaghanComp$get_signal(0.03, 0.03, 0.040)
+callaghanComp <- CallaghanCompartment$new()
+callaghanComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
 
-vanGelderenComp <- VanGelderenCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-vanGelderenComp$get_signal(0.03, 0.03, 0.040)
+vanGelderenComp <- VanGelderenCompartment$new()
+vanGelderenComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
 
 ## ------------------------------------------------
 ## Method `BaseCompartment$get_parameter_names`
@@ -53,11 +44,11 @@ freeComp <- FreeCompartment$new()
 freeComp$get_parameter_names()
 
 ## ------------------------------------------------
-## Method `BaseCompartment$get_parameter_values`
+## Method `BaseCompartment$get_parameters`
 ## ------------------------------------------------
 
 freeComp <- FreeCompartment$new()
-freeComp$get_parameter_values()
+freeComp$get_parameters()
 }
 \keyword{internal}
 \section{Methods}{
@@ -65,7 +56,7 @@ freeComp$get_parameter_values()
 \itemize{
 \item \href{#method-BaseCompartment-get_signal}{\code{BaseCompartment$get_signal()}}
 \item \href{#method-BaseCompartment-get_parameter_names}{\code{BaseCompartment$get_parameter_names()}}
-\item \href{#method-BaseCompartment-get_parameter_values}{\code{BaseCompartment$get_parameter_values()}}
+\item \href{#method-BaseCompartment-get_parameters}{\code{BaseCompartment$get_parameters()}}
 \item \href{#method-BaseCompartment-clone}{\code{BaseCompartment$clone()}}
 }
 }
@@ -79,6 +70,7 @@ Computes the signal attenuation predicted by the model.
   small_delta,
   big_delta,
   G,
+  direction = c(0, 0, 1),
   echo_time = NULL,
   n_max = 20L,
   m_max = 50L
@@ -97,6 +89,9 @@ gradient pulses in milliseconds.}
 \item{\code{G}}{A numeric value specifying the strength of the gradient in
 mT.\eqn{\mu}m\eqn{^{-1}}.}
 
+\item{\code{direction}}{A numeric vector specifying the direction of the
+gradient. Defaults to \code{c(0, 0, 1)}.}
+
 \item{\code{echo_time}}{A numeric value specifying the echo time in
 milliseconds.}
 
@@ -114,37 +109,28 @@ A numeric value storing the predicted signal attenuation.
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{freeComp <- FreeCompartment$new()
-freeComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040e-3)
+freeComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
 
 sphereComp <- SphereCompartment$new()
-sphereComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040e-3)
+sphereComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
 
 sodermanComp <- SodermanCompartment$new()
-sodermanComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040e-3)
+sodermanComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
 
-staniszComp <- StaniszCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-staniszComp$get_signal(0.03, 0.03, 0.040)
+staniszComp <- StaniszCompartment$new()
+staniszComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
 
-neumanComp <- NeumanCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
+neumanComp <- NeumanCompartment$new()
+neumanComp$get_signal(
+  small_delta = 30, big_delta = 30, G = 0.040,
+  echo_time = 40
 )
-neumanComp$get_signal(0.03, 0.03, 0.040, echo_time = 0.040)
 
-callaghanComp <- CallaghanCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-callaghanComp$get_signal(0.03, 0.03, 0.040)
+callaghanComp <- CallaghanCompartment$new()
+callaghanComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
 
-vanGelderenComp <- VanGelderenCompartment$new(
-  radius = 1e-6,
-  diffusivity = 2.0e-9
-)
-vanGelderenComp$get_signal(0.03, 0.03, 0.040)
+vanGelderenComp <- VanGelderenCompartment$new()
+vanGelderenComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
 }
 \if{html}{\out{</div>}}
 
@@ -175,12 +161,12 @@ freeComp$get_parameter_names()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-BaseCompartment-get_parameter_values"></a>}}
-\if{latex}{\out{\hypertarget{method-BaseCompartment-get_parameter_values}{}}}
-\subsection{Method \code{get_parameter_values()}}{
+\if{html}{\out{<a id="method-BaseCompartment-get_parameters"></a>}}
+\if{latex}{\out{\hypertarget{method-BaseCompartment-get_parameters}{}}}
+\subsection{Method \code{get_parameters()}}{
 Returns the values of the compartment parameters
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseCompartment$get_parameter_values()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{BaseCompartment$get_parameters()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
@@ -190,7 +176,7 @@ parameters.
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{freeComp <- FreeCompartment$new()
-freeComp$get_parameter_values()
+freeComp$get_parameters()
 }
 \if{html}{\out{</div>}}
 

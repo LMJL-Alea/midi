@@ -110,3 +110,28 @@ cylinder_traces <- function(r, xs, ys, zs, h,
 
   traces
 }
+
+# Computes rotation matrix that brings z-axis to mu
+rotation_matrix_from_z_to_mu <- function(mu) {
+  mu <- mu / sqrt(sum(mu^2))
+  z <- c(0, 0, 1)
+  if (all(mu == z)) {
+    return(diag(3))
+  }
+  if (all(mu == -z)) {
+    return(matrix(c(1, 0, 0, 0, -1, 0, 0, 0, -1), nrow = 3L, ncol = 3L))
+  }
+  # computes cross product between z and mu
+  v <- c(
+    z[2] * mu[3] - z[3] * mu[2],
+    z[3] * mu[1] - z[1] * mu[3],
+    z[1] * mu[2] - z[2] * mu[1]
+  )
+  # computes norm of v
+  s <- sqrt(sum(v^2))
+  # computes inner product between z and mu
+  c <- sum(z * mu)
+
+  V <- matrix(c(0, v[3], -v[2], -v[3], 0, v[1], v[2], -v[1], 0), nrow = 3, ncol = 3)
+  diag(3) + V + V %*% V * (1 - c) / (s^2)
+}

@@ -9,54 +9,48 @@ BaseCompartment <- R6::R6Class(
     #' @description Computes the signal attenuation predicted by the model.
     #'
     #' @param small_delta A numeric value specifying the duration of the
-    #'  gradient pulse in milliseconds.
+    #'   gradient pulse in milliseconds.
     #' @param big_delta A numeric value specifying the duration between the
-    #'  gradient pulses in milliseconds.
+    #'   gradient pulses in milliseconds.
     #' @param G A numeric value specifying the strength of the gradient in
-    #'  mT.\eqn{\mu}m\eqn{^{-1}}.
+    #'   mT.\eqn{\mu}m\eqn{^{-1}}.
+    #' @param direction A numeric vector specifying the direction of the
+    #'   gradient. Defaults to `c(0, 0, 1)`.
     #' @param echo_time A numeric value specifying the echo time in
     #'   milliseconds.
     #' @param n_max An integer value specifying the maximum order of the Bessel
-    #'  function. Defaults to `20L`.
+    #'   function. Defaults to `20L`.
     #' @param m_max An integer value specifying the maximum number of extrema
-    #' for the Bessel function. Defaults to `50L`.
+    #'   for the Bessel function. Defaults to `50L`.
     #'
     #' @return A numeric value storing the predicted signal attenuation.
     #'
     #' @examples
     #' freeComp <- FreeCompartment$new()
-    #' freeComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040e-3)
+    #' freeComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
     #'
     #' sphereComp <- SphereCompartment$new()
-    #' sphereComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040e-3)
+    #' sphereComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
     #'
     #' sodermanComp <- SodermanCompartment$new()
-    #' sodermanComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040e-3)
+    #' sodermanComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
     #'
-    #' staniszComp <- StaniszCompartment$new(
-    #'   radius = 1e-6,
-    #'   diffusivity = 2.0e-9
-    #' )
-    #' staniszComp$get_signal(0.03, 0.03, 0.040)
+    #' staniszComp <- StaniszCompartment$new()
+    #' staniszComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
     #'
-    #' neumanComp <- NeumanCompartment$new(
-    #'   radius = 1e-6,
-    #'   diffusivity = 2.0e-9
+    #' neumanComp <- NeumanCompartment$new()
+    #' neumanComp$get_signal(
+    #'   small_delta = 30, big_delta = 30, G = 0.040,
+    #'   echo_time = 40
     #' )
-    #' neumanComp$get_signal(0.03, 0.03, 0.040, echo_time = 0.040)
     #'
-    #' callaghanComp <- CallaghanCompartment$new(
-    #'   radius = 1e-6,
-    #'   diffusivity = 2.0e-9
-    #' )
-    #' callaghanComp$get_signal(0.03, 0.03, 0.040)
+    #' callaghanComp <- CallaghanCompartment$new()
+    #' callaghanComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
     #'
-    #' vanGelderenComp <- VanGelderenCompartment$new(
-    #'   radius = 1e-6,
-    #'   diffusivity = 2.0e-9
-    #' )
-    #' vanGelderenComp$get_signal(0.03, 0.03, 0.040)
+    #' vanGelderenComp <- VanGelderenCompartment$new()
+    #' vanGelderenComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
     get_signal = function(small_delta, big_delta, G,
+                          direction = c(0, 0, 1),
                           echo_time = NULL,
                           n_max = 20L,
                           m_max = 50L) {
@@ -64,6 +58,7 @@ BaseCompartment <- R6::R6Class(
         small_delta = small_delta,
         big_delta = big_delta,
         G = G,
+        direction = direction,
         echo_time = echo_time,
         n_max = n_max,
         m_max = m_max
@@ -79,7 +74,7 @@ BaseCompartment <- R6::R6Class(
     #' freeComp <- FreeCompartment$new()
     #' freeComp$get_parameter_names()
     get_parameter_names = function() {
-      private$parameter_names()
+      names(private$parameters())
     },
 
     #' @description Returns the values of the compartment parameters
@@ -89,9 +84,9 @@ BaseCompartment <- R6::R6Class(
     #'
     #' @examples
     #' freeComp <- FreeCompartment$new()
-    #' freeComp$get_parameter_values()
-    get_parameter_values = function() {
-      private$parameter_values()
+    #' freeComp$get_parameters()
+    get_parameters = function() {
+      private$parameters()
     }
   )
 )

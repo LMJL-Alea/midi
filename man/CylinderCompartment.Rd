@@ -7,32 +7,30 @@
 A class to model restricted diffusion in a cylinder.
 }
 \examples{
-
-## ------------------------------------------------
-## Method `CylinderCompartment$get_signal`
-## ------------------------------------------------
-
-cylinderComp <- CylinderCompartment$new(
-  axis = c(0, 0, 1),
-  radius = 1e-6,
-  diffusivity = 2.0e-9,
-  radial_model = "soderman"
-)
-cylinderComp$get_signal(
-  small_delta = 0.03,
-  big_delta = 0.03,
-  G = 0.040,
-  direction = c(0, 0, 1)
-)
+cylComp <- CylinderCompartment$new()
+cylComp$get_signal(small_delta = 30, big_delta = 30, G = 0.040)
+cylComp$get_parameter_names()
+cylComp$get_parameters()
+}
+\section{Super classes}{
+\code{\link[midi:BaseCompartment]{midi::BaseCompartment}} -> \code{\link[midi:CircularlyShapedCompartment]{midi::CircularlyShapedCompartment}} -> \code{CylinderCompartment}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-CylinderCompartment-new}{\code{CylinderCompartment$new()}}
-\item \href{#method-CylinderCompartment-get_signal}{\code{CylinderCompartment$get_signal()}}
 \item \href{#method-CylinderCompartment-clone}{\code{CylinderCompartment$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameter_names"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameter_names'><code>midi::BaseCompartment$get_parameter_names()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameters"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameters'><code>midi::BaseCompartment$get_parameters()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_signal"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_signal'><code>midi::BaseCompartment$get_signal()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CylinderCompartment-new"></a>}}
 \if{latex}{\out{\hypertarget{method-CylinderCompartment-new}{}}}
@@ -40,10 +38,8 @@ cylinderComp$get_signal(
 Instantiates a new cylinder compartment.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CylinderCompartment$new(
-  axis,
-  radius,
-  diffusivity,
-  radial_model = c("soderman", "callaghan", "stanisz", "neuman", "vangelderen")
+  axis = c(0, 0, 1),
+  restricted_compartment = VanGelderenCompartment$new()
 )}\if{html}{\out{</div>}}
 }
 
@@ -53,86 +49,15 @@ Instantiates a new cylinder compartment.
 \item{\code{axis}}{A length-3 numeric vector specifying the axis of the
 cylinder.}
 
-\item{\code{radius}}{A numeric value specifying the radius of the cylinder in
-meters.}
-
-\item{\code{diffusivity}}{A numeric value specifying the diffusivity within the
-cylinder in m\eqn{^2}.s\eqn{^{-1}}.}
-
-\item{\code{radial_model}}{A character string specifying the radial model to
-use. Choices are \code{"soderman"}, \code{"callaghan"}, \code{"stanisz"}, \code{"neuman"},
-and \code{"vangelderen"}. Defaults to \code{"soderman"}.}
+\item{\code{restricted_compartment}}{An instance of the
+\code{\link{CircularlyShapedCompartment}} class specifying the restricted
+compartment within the sphere. Defaults to a Van Gelderen compartment.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 An instance of the \code{\link{CylinderCompartment}} class.
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CylinderCompartment-get_signal"></a>}}
-\if{latex}{\out{\hypertarget{method-CylinderCompartment-get_signal}{}}}
-\subsection{Method \code{get_signal()}}{
-Computes the signal attenuation predicted by the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CylinderCompartment$get_signal(
-  small_delta,
-  big_delta,
-  G,
-  direction,
-  echo_time = NULL,
-  n_max = 20L,
-  m_max = 50L
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{small_delta}}{A numeric value specifying the duration of the
-gradient pulse in seconds.}
-
-\item{\code{big_delta}}{A numeric value specifying the duration between the
-gradient pulses in seconds.}
-
-\item{\code{G}}{A numeric value specifying the strength of the gradient in
-T.m\eqn{^{-1}}.}
-
-\item{\code{direction}}{A length-3 numeric vector specifying the direction of
-the gradient.}
-
-\item{\code{echo_time}}{A numeric value specifying the echo time in seconds.}
-
-\item{\code{n_max}}{An integer value specifying the maximum order of the Bessel
-function. Defaults to \code{20L}.}
-
-\item{\code{m_max}}{An integer value specifying the maximum number of extrema
-for the Bessel function. Defaults to \code{50L}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A numeric value storing the predicted signal attenuation.
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{cylinderComp <- CylinderCompartment$new(
-  axis = c(0, 0, 1),
-  radius = 1e-6,
-  diffusivity = 2.0e-9,
-  radial_model = "soderman"
-)
-cylinderComp$get_signal(
-  small_delta = 0.03,
-  big_delta = 0.03,
-  G = 0.040,
-  direction = c(0, 0, 1)
-)
-}
-\if{html}{\out{</div>}}
-
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CylinderCompartment-clone"></a>}}

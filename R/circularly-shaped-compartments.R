@@ -39,8 +39,10 @@ CircularlyShapedCompartment <- R6::R6Class(
   private = list(
     radius = NULL,
     diffusivity = NULL,
-    parameter_names = function() c("Radius", "Diffusivity"),
-    parameter_values = function()  c(private$radius, private$diffusivity)
+    parameters = function() list(
+      Radius = private$radius,
+      Diffusivity = private$diffusivity
+    )
   )
 )
 
@@ -59,9 +61,10 @@ SodermanCompartment <- R6::R6Class(
   inherit = CircularlyShapedCompartment,
   private = list(
     compute_signal = function(small_delta, big_delta, G,
-                          echo_time = NULL,
-                          n_max = 20L,
-                          m_max = 50L) {
+                              direction = c(0, 0, 1),
+                              echo_time = NULL,
+                              n_max = 20L,
+                              m_max = 50L) {
       x <- gyromagnetic_ratio() * small_delta * G * private$radius
       if (x < .Machine$double.eps) return(1)
       (2 * besselJ(x, 1) / x)^2
@@ -84,9 +87,10 @@ StaniszCompartment <- R6::R6Class(
   inherit = CircularlyShapedCompartment,
   private = list(
     compute_signal = function(small_delta, big_delta, G,
-                          echo_time = NULL,
-                          n_max = 20L,
-                          m_max = 50L) {
+                              direction = c(0, 0, 1),
+                              echo_time = NULL,
+                              n_max = 20L,
+                              m_max = 50L) {
       x <- gyromagnetic_ratio() * small_delta * G * private$radius
       if (x < .Machine$double.eps) return(1)
       n <- seq_len(n_max)
@@ -112,9 +116,10 @@ NeumanCompartment <- R6::R6Class(
   inherit = CircularlyShapedCompartment,
   private = list(
     compute_signal = function(small_delta, big_delta, G,
-                          echo_time = NULL,
-                          n_max = 20L,
-                          m_max = 50L) {
+                              direction = c(0, 0, 1),
+                              echo_time = NULL,
+                              n_max = 20L,
+                              m_max = 50L) {
       if (is.null(echo_time)) {
         cli::cli_abort("The echo time must be specified
                        through the {.arg echo_time} argument.")
@@ -142,9 +147,10 @@ CallaghanCompartment <- R6::R6Class(
   inherit = CircularlyShapedCompartment,
   private = list(
     compute_signal = function(small_delta, big_delta, G,
-                          echo_time = NULL,
-                          n_max = 20L,
-                          m_max = 50L) {
+                              direction = c(0, 0, 1),
+                              echo_time = NULL,
+                              n_max = 20L,
+                              m_max = 50L) {
       orders <- 0:n_max
       extrms <- bessel_extrema[orders + 1, 1:m_max]
       work_value <- gyromagnetic_ratio() * small_delta * G * private$radius
@@ -176,9 +182,10 @@ VanGelderenCompartment <- R6::R6Class(
   inherit = CircularlyShapedCompartment,
   private = list(
     compute_signal = function(small_delta, big_delta, G,
-                          echo_time = NULL,
-                          n_max = 20L,
-                          m_max = 50L) {
+                              direction = c(0, 0, 1),
+                              echo_time = NULL,
+                              n_max = 20L,
+                              m_max = 50L) {
       alpha_m_sq <- (bessel_extrema[2, 1:m_max] / private$radius)^2
       K <- -2 * gyromagnetic_ratio()^2 * G^2
       first_term <- 2 * private$diffusivity * alpha_m_sq * small_delta - 2

@@ -28,13 +28,15 @@ FreeCompartment <- R6::R6Class(
   private = list(
     diffusivity = NULL,
     compute_signal = function(small_delta, big_delta, G,
+                              direction = c(0, 0, 1),
                               echo_time = NULL,
                               n_max = 20L,
                               m_max = 50L) {
       b <- bvalue(small_delta, big_delta, G)
       exp(-b * private$diffusivity)
     },
-    parameter_names = function() "FreeDiffusivity",
-    parameter_values = function()  private$diffusivity
+    parameters = function() list(
+      FreeDiffusivity = private$diffusivity
+    )
   )
 )

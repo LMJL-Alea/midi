@@ -24,7 +24,7 @@ medium. The Journal of Chemical Physics, 60(11), 4508-4511.
 <details open><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameter_names"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameter_names'><code>midi::BaseCompartment$get_parameter_names()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameter_values"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameter_values'><code>midi::BaseCompartment$get_parameter_values()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_parameters"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_parameters'><code>midi::BaseCompartment$get_parameters()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="midi" data-topic="BaseCompartment" data-id="get_signal"><a href='../../midi/html/BaseCompartment.html#method-BaseCompartment-get_signal'><code>midi::BaseCompartment$get_signal()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="midi" data-topic="CircularlyShapedCompartment" data-id="initialize"><a href='../../midi/html/CircularlyShapedCompartment.html#method-CircularlyShapedCompartment-initialize'><code>midi::CircularlyShapedCompartment$initialize()</code></a></span></li>
 </ul>

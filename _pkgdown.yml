@@ -20,15 +20,20 @@ reference:
   - subtitle: Free diffusion compartment
   - contents:
     - FreeCompartment
-  - subtitle: Isotropically restricted comparments
+  - subtitle: Isotropically restricted compartments
   - contents:
     - SphereCompartment
   - subtitle: Anisotropically restricted compartments
   - contents:
     - CylinderCompartment
     - CylinderBundleCompartment
+  - title: Statistical distributions
+  - contents:
+    - GammaDistribution
+    - WatsonDistribution
   - title: Utility functions
   - contents:
+    - ryclinders
     - run_app
 
 news:

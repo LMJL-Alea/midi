@@ -20,7 +20,7 @@ bessel_extrema <- readr::read_tsv(
 bessel_extrema <- as.matrix(bessel_extrema)
 colnames(bessel_extrema) <- NULL
 rownames(bessel_extrema) <- NULL
-bessel_extrema <- bessel_extrema[, 1:1000]
+bessel_extrema <- bessel_extrema[, 1:500]
 
 fs::file_delete("data-raw/BesselMaxAndMin.zip")
 fs::file_delete("data-raw/BesselMaxAndMin.tsv")
