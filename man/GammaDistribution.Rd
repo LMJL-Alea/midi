@@ -4,13 +4,8 @@
 \alias{GammaDistribution}
 \title{Gamma distribution class}
 \description{
-Gamma distribution class
-
-Gamma distribution class
-}
-\details{
-This class defines the gamma distribution. It provides methods for fitting the
-distribution to data and generating random samples.
+This class defines the gamma distribution. It provides methods
+for fitting the distribution to data and generating random samples.
 }
 \examples{
 gd <- GammaDistribution$new(

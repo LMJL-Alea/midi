@@ -110,7 +110,7 @@ CylinderBundleCompartment <- R6::R6Class(
         if (is.infinite(private$axis_concentration)) {
           axial_diffusivity <- private$diffusivity
         } else {
-          axial_diffusivity <- private$diffusivity * wd$get_rvalue()^2
+          axial_diffusivity <- private$diffusivity * (1 - wd$get_variance())^2
         }
       } else {
         if (axial_diffusivity > private$diffusivity)

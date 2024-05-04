@@ -4,13 +4,8 @@
 \alias{WatsonDistribution}
 \title{Watson distribution class}
 \description{
-Watson distribution class
-
-Watson distribution class
-}
-\details{
-This class defines the Watson distribution. It provides methods for fitting the
-distribution to data and generating random samples.
+This class defines the Watson distribution. It provides methods
+for fitting the distribution to data and generating random samples.
 }
 \examples{
 wd <- WatsonDistribution$new(
@@ -33,7 +28,6 @@ wd$get_concentration()
 \item \href{#method-WatsonDistribution-new}{\code{WatsonDistribution$new()}}
 \item \href{#method-WatsonDistribution-get_axis}{\code{WatsonDistribution$get_axis()}}
 \item \href{#method-WatsonDistribution-get_concentration}{\code{WatsonDistribution$get_concentration()}}
-\item \href{#method-WatsonDistribution-get_rvalue}{\code{WatsonDistribution$get_rvalue()}}
 \item \href{#method-WatsonDistribution-clone}{\code{WatsonDistribution$clone()}}
 }
 }
@@ -98,20 +92,6 @@ distribution.
 
 \subsection{Returns}{
 A numeric value storing the concentration parameter of the Watson
-distribution.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-WatsonDistribution-get_rvalue"></a>}}
-\if{latex}{\out{\hypertarget{method-WatsonDistribution-get_rvalue}{}}}
-\subsection{Method \code{get_rvalue()}}{
-Retrieves the concentration index of the Watson distribution.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{WatsonDistribution$get_rvalue()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A numeric value storing the concentration index of the Watson
 distribution.
 }
 }

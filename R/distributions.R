@@ -16,6 +16,7 @@ BaseDistribution <- R6::R6Class(
     #'   nothing.
     fit = function(x) {
       private$fit_impl(x)
+      invisible(self)
     },
 
     #' @description Generate random samples from the distribution.
@@ -45,8 +46,8 @@ BaseDistribution <- R6::R6Class(
 
 #' Gamma distribution class
 #'
-#' This class defines the gamma distribution. It provides methods for fitting the
-#' distribution to data and generating random samples.
+#' @description This class defines the gamma distribution. It provides methods
+#'   for fitting the distribution to data and generating random samples.
 #'
 #' @export
 #' @examples
@@ -127,8 +128,8 @@ GammaDistribution <- R6::R6Class(
 
 #' Watson distribution class
 #'
-#' This class defines the Watson distribution. It provides methods for fitting the
-#' distribution to data and generating random samples.
+#' @description This class defines the Watson distribution. It provides methods
+#'   for fitting the distribution to data and generating random samples.
 #'
 #' @export
 #' @examples
@@ -175,14 +176,6 @@ WatsonDistribution <- R6::R6Class(
     #'   distribution.
     get_concentration = function() {
       private$kappa
-    },
-
-    #' @description Retrieves the concentration index of the Watson distribution.
-    #'
-    #' @return A numeric value storing the concentration index of the Watson
-    #'   distribution.
-    get_rvalue = function() {
-      private$r
     }
   ),
   private = list(
