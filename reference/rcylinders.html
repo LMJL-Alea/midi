@@ -67,7 +67,8 @@ and diffusivity distributions.</p>
 <span>  <span class="va">diffusivity_mean</span>,</span>
 <span>  axis_concentration <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  radius_sd <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  diffusivity_sd <span class="op">=</span> <span class="fl">0</span></span>
+<span>  diffusivity_sd <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  restricted_model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"callaghan"</span>, <span class="st">"neuman"</span>, <span class="st">"soderman"</span>, <span class="st">"stanisz"</span>, <span class="st">"vangelderen"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -108,6 +109,12 @@ the mean value.</p></dd>
 <dd><p>A numeric value specifying the standard deviation of
 the diffusivity distribution. Defaults to <code>0</code> in which case the diffusivity
 is fixed to the mean value.</p></dd>
+
+
+<dt>restricted_model</dt>
+<dd><p>A character vector specifying the restricted
+diffusion model to use. Defaults to <code>callaghan</code>. Possible values are
+<code>callaghan</code>, <code>neuman</code>, <code>soderman</code>, <code>stanisz</code>, and <code>vangelderen</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
