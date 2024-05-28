@@ -29,6 +29,7 @@ reference:
     - WatsonDistribution
   - title: Utility functions
   - contents:
+    - bvalue
     - rcylinders
     - run_app
 
