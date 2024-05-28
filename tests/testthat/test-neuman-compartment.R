@@ -14,5 +14,5 @@ test_that("`NeumanCompartment` class works", {
     echo_time = 80
   )
   expect_true(inherits(comp, "CircularlyShapedCompartment"))
-  expect_equal(round(out, 5), 0.93136)
+  expect_equal(round(out, 5), 0.93140)
 })

@@ -11,7 +11,8 @@ rcylinders(
   diffusivity_mean,
   axis_concentration = Inf,
   radius_sd = 0,
-  diffusivity_sd = 0
+  diffusivity_sd = 0,
+  restricted_model = c("callaghan", "neuman", "soderman", "stanisz", "vangelderen")
 )
 }
 \arguments{
@@ -37,6 +38,10 @@ the mean value.}
 \item{diffusivity_sd}{A numeric value specifying the standard deviation of
 the diffusivity distribution. Defaults to \code{0} in which case the diffusivity
 is fixed to the mean value.}
+
+\item{restricted_model}{A character vector specifying the restricted
+diffusion model to use. Defaults to \code{callaghan}. Possible values are
+\code{callaghan}, \code{neuman}, \code{soderman}, \code{stanisz}, and \code{vangelderen}.}
 }
 \value{
 A list of \eqn{n} cylinder compartments of class

@@ -85,7 +85,10 @@ CylinderBundleCompartment <- R6::R6Class(
       gd <- GammaDistribution$new()
       # Then, extract radius sample and fit gamma distribution
       radius_sample <- params$CylinderRadius
-      if (var(radius_sample) == 0) {
+      radius_variance <- 0
+      if (length(radius_sample) > 1L)
+        radius_variance <- var(radius_sample)
+      if (radius_variance == 0) {
         private$radius <- radius_sample[1]
         private$radius_sd <- 0
       } else {
@@ -96,7 +99,10 @@ CylinderBundleCompartment <- R6::R6Class(
 
       # Finally, extract diffusivity sample and fit gamma distribution
       diffusivity_sample <- params$CylinderDiffusivity
-      if (var(diffusivity_sample) == 0) {
+      diffusivity_variance <- 0
+      if (length(diffusivity_sample) > 1L)
+        diffusivity_variance <- var(diffusivity_sample)
+      if (diffusivity_variance == 0) {
         private$diffusivity <- diffusivity_sample[1]
         private$diffusivity_sd <- 0
       } else {

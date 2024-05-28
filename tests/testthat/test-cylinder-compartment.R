@@ -19,5 +19,5 @@ test_that("`CylinderCompartment` class works", {
     direction = c(1, 0, 0)
   )
   expect_true(inherits(comp, "CylinderCompartment"))
-  expect_equal(round(out, 5), 0.91246)
+  expect_equal(round(out, 5), 0.91251)
 })

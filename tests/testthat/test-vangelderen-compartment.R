@@ -13,5 +13,5 @@ test_that("`VanGelderenCompartment` class works", {
     G = 0.040
   )
   expect_true(inherits(comp, "CircularlyShapedCompartment"))
-  expect_equal(round(out, 5), 0.91246)
+  expect_equal(round(out, 5), 0.91251)
 })

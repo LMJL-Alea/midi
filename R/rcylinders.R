@@ -28,6 +28,9 @@
 #' @param diffusivity_sd A numeric value specifying the standard deviation of
 #'   the diffusivity distribution. Defaults to `0` in which case the diffusivity
 #'   is fixed to the mean value.
+#' @param restricted_model A character vector specifying the restricted
+#'  diffusion model to use. Defaults to `callaghan`. Possible values are
+#'  `callaghan`, `neuman`, `soderman`, `stanisz`, and `vangelderen`.
 #'
 #' @return A list of \eqn{n} cylinder compartments of class
 #'   [`CylinderCompartment`].
@@ -45,7 +48,9 @@
 rcylinders <- function(n, axis_mean, radius_mean, diffusivity_mean,
                        axis_concentration = Inf,
                        radius_sd = 0,
-                       diffusivity_sd = 0) {
+                       diffusivity_sd = 0,
+                       restricted_model = c("callaghan", "neuman", "soderman", "stanisz", "vangelderen")) {
+  restricted_model <- rlang::arg_match(restricted_model)
   if (is.infinite(axis_concentration) && radius_sd == 0 && diffusivity_sd == 0) {
     n <- 1L
   }
@@ -91,13 +96,32 @@ rcylinders <- function(n, axis_mean, radius_mean, diffusivity_mean,
   purrr::pmap(
     .l = list(axis_sample, radius_sample, diffusivity_sample),
     .f = \(.axis, .radius, .diffusivity) {
-    restr_comp <- VanGelderenCompartment$new(
-      radius = .radius,
-      diffusivity = .diffusivity
-    )
-    CylinderCompartment$new(
-      axis = .axis,
-      restricted_compartment = restr_comp
-    )
-  })
+      restr_comp <- switch(
+        restricted_model,
+        callaghan = CallaghanCompartment$new(
+          radius = .radius,
+          diffusivity = .diffusivity
+        ),
+        neuman = NeumanCompartment$new(
+          radius = .radius,
+          diffusivity = .diffusivity
+        ),
+        soderman = SodermanCompartment$new(
+          radius = .radius,
+          diffusivity = .diffusivity
+        ),
+        stanisz = StaniszCompartment$new(
+          radius = .radius,
+          diffusivity = .diffusivity
+        ),
+        vangelderen = VanGelderenCompartment$new(
+          radius = .radius,
+          diffusivity = .diffusivity
+        )
+      )
+      CylinderCompartment$new(
+        axis = .axis,
+        restricted_compartment = restr_comp
+      )
+    })
 }

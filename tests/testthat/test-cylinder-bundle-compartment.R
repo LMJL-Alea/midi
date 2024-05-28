@@ -23,7 +23,7 @@ test_that("`CylinderBundleCompartment` class works", {
     direction = c(0, 0, 1)
   )
 
-  expect_equal(round(out, 5L), 0.00551)
+  expect_equal(round(out, 5L), 0.00534)
 
   params <- comp$get_parameters()
 
