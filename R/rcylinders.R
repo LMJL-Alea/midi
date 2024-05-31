@@ -49,7 +49,8 @@ rcylinders <- function(n, axis_mean, radius_mean, diffusivity_mean,
                        axis_concentration = Inf,
                        radius_sd = 0,
                        diffusivity_sd = 0,
-                       restricted_model = c("callaghan", "neuman", "soderman", "stanisz", "vangelderen")) {
+                       restricted_model = c("Callaghan", "Neuman", "Soderman",
+                                            "Stanisz", "Van Gelderen")) {
   restricted_model <- rlang::arg_match(restricted_model)
   if (is.infinite(axis_concentration) && radius_sd == 0 && diffusivity_sd == 0) {
     n <- 1L
@@ -59,10 +60,7 @@ rcylinders <- function(n, axis_mean, radius_mean, diffusivity_mean,
   if (is.infinite(axis_concentration)) {
     axis_sample <- purrr::map(1:n, \(.n) axis_mean)
   } else {
-    wd <- WatsonDistribution$new(
-      mu = axis_mean,
-      kappa = axis_concentration
-    )
+    wd <- WatsonDistribution$new(mu = axis_mean, kappa = axis_concentration)
     axis_sample <- wd$random(n)
   }
 
@@ -72,10 +70,7 @@ rcylinders <- function(n, axis_mean, radius_mean, diffusivity_mean,
   } else {
     scale <- radius_sd^2 / radius_mean
     shape <- radius_mean / scale
-    gd <- GammaDistribution$new(
-      shape = shape,
-      scale = scale
-    )
+    gd <- GammaDistribution$new(shape = shape, scale = scale)
     radius_sample <- gd$random(n)
   }
 
@@ -85,10 +80,7 @@ rcylinders <- function(n, axis_mean, radius_mean, diffusivity_mean,
   } else {
     scale <- diffusivity_sd^2 / diffusivity_mean
     shape <- diffusivity_mean / scale
-    gd <- GammaDistribution$new(
-      shape = shape,
-      scale = scale
-    )
+    gd <- GammaDistribution$new(shape = shape, scale = scale)
     diffusivity_sample <- gd$random(n)
   }
 
@@ -98,23 +90,23 @@ rcylinders <- function(n, axis_mean, radius_mean, diffusivity_mean,
     .f = \(.axis, .radius, .diffusivity) {
       restr_comp <- switch(
         restricted_model,
-        callaghan = CallaghanCompartment$new(
+        Callaghan = CallaghanCompartment$new(
           radius = .radius,
           diffusivity = .diffusivity
         ),
-        neuman = NeumanCompartment$new(
+        Neuman = NeumanCompartment$new(
           radius = .radius,
           diffusivity = .diffusivity
         ),
-        soderman = SodermanCompartment$new(
+        Soderman = SodermanCompartment$new(
           radius = .radius,
           diffusivity = .diffusivity
         ),
-        stanisz = StaniszCompartment$new(
+        Stanisz = StaniszCompartment$new(
           radius = .radius,
           diffusivity = .diffusivity
         ),
-        vangelderen = VanGelderenCompartment$new(
+        `Van Gelderen` = VanGelderenCompartment$new(
           radius = .radius,
           diffusivity = .diffusivity
         )

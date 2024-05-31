@@ -12,7 +12,7 @@ rcylinders(
   axis_concentration = Inf,
   radius_sd = 0,
   diffusivity_sd = 0,
-  restricted_model = c("callaghan", "neuman", "soderman", "stanisz", "vangelderen")
+  restricted_model = c("Callaghan", "Neuman", "Soderman", "Stanisz", "Van Gelderen")
 )
 }
 \arguments{
